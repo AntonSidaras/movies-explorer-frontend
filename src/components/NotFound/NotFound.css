@@ -1,0 +1,27 @@
+.not-found{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.not-found__picture{
+  width: 30vw;
+  height: 40vh;
+}
+
+.not-found__caption{
+  color: white;
+}
+
+.not-found__back{
+  color: white;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+.not-found__back:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
