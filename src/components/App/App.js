@@ -12,23 +12,23 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <CurrentUserContext.Provider value={{}}>
-        <div className="app app__content">
+      <CurrentUserContext.Provider value={{ isLoggedIn: false }}>
+        <div className='app app__content'>
           <Routes>
             {/* О проекте */}
-            <Route exact path="/" element={<Main />} />
+            <Route exact path='/' element={<Main />} />
             {/* Фильмы */}
-            <Route exact path="/movies" element={<Movies />} />
+            <Route exact path='/movies' element={<Movies />} />
             {/* Сохранённые фильмы */}
-            <Route exact path="/saved-movies" element={<SavedMovies />} />
+            <Route exact path='/saved-movies' element={<SavedMovies />} />
             {/* Профиль */}
-            <Route exact path="/profile" element={<Profile />} />
+            <Route exact path='/profile' element={<Profile />} />
             {/* Вход */}
-            <Route exact path="/signin" element={<Login />} />
+            <Route exact path='/signin' element={<Login />} />
             {/* Регистрация */}
-            <Route exact path="/signup" element={<Register />} />
+            <Route exact path='/signup' element={<Register />} />
             {/* 404 */}
-            <Route path="*" element={<NotFound />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </CurrentUserContext.Provider>
