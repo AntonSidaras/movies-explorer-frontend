@@ -1,23 +1,32 @@
 import React from 'react';
-import './Header.css';
 import NavTab from '../NavTab/NavTab';
+import AuthButtons from '../AuthButtons/AuthButtons';
+import AccountButtons from '../AccountButton/AccountButton';
 import projectLogo from '../../images/header/projectLogo.svg';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { areas } from '../../utils/constants';
+import './Header.css';
 
 function Header({ area }) {
   const user = React.useContext(CurrentUserContext);
+  const isMovieArea = area === (areas.areaMovies || areas.areaSavedMovies);
+  const isAuthArea = area === areas.areaAuth;
 
-  const navTab = (area === areas.areaMovies ? <NavTab /> : <></>);
+  const navTab = isMovieArea ? <NavTab /> : <></>;
+  const accountButton = isMovieArea ? <AccountButtons /> : <></>;
+  const authButtons = isAuthArea ? <AuthButtons /> : <></>;
   console.log(user);
 
   return (
-    <header className='header border'>
+    <header className='header'>
       <div className='header__left-content'>
         <img className='header__logo' src={projectLogo} alt='Логотип проекта Movies Explorer' />
         {navTab}
       </div>
-      <div className='header__right-content border'></div>
+      <div className='header__right-content'>
+        {authButtons}
+        {accountButton}
+      </div>
     </header>
   );
 }

@@ -7,19 +7,20 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 import { areas } from '../../utils/constants';
+import './Main.css';
 
 function Main() {
 
   return (
-    <>
-      <Header area={areas.areaMain} />
+    <div className='main'>
+      <Header area={areas.areaAuth} />
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
       <Footer />
-    </>
+    </div>
   );
 }
 
