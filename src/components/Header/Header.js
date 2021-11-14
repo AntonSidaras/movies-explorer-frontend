@@ -10,11 +10,11 @@ import './Header.css';
 function Header({ area }) {
   const user = React.useContext(CurrentUserContext);
   const isMovieArea = area === (areas.areaMovies || areas.areaSavedMovies);
-  const isAuthArea = area === areas.areaAuth;
+  const isMainArea = area === areas.areaMain;
 
   const navTab = isMovieArea ? <NavTab /> : <></>;
   const accountButton = isMovieArea ? <AccountButtons /> : <></>;
-  const authButtons = isAuthArea ? <AuthButtons /> : <></>;
+  const authButtons = isMainArea ? <AuthButtons /> : <></>;
   console.log(user);
 
   return (

@@ -13,13 +13,21 @@ function Main() {
 
   return (
     <div className='main'>
-      <Header area={areas.areaAuth} />
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
-      <Footer />
+      <div className='main__section main__section_backgroung_eagle-green'>
+        <Header area={areas.areaMain} />
+        <Promo />
+      </div>
+      <div className='main__section'>
+        <AboutProject />
+      </div>
+      <div className='main__section main__section_backgroung_signal-black'>
+        <Techs />
+      </div>
+      <div className='main__section'>
+        <AboutMe />
+        <Portfolio />
+        <Footer />
+      </div>
     </div>
   );
 }
