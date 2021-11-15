@@ -81,3 +81,30 @@
   border-radius: 10px;
   object-fit: cover;
 }
+
+.about-me__list{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 99px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-me__item{
+  margin: 0 20px 0 0;
+  padding: 0;
+}
+
+.about-me__item:last-child{
+  margin: 0;
+}
+
+.about-me__link{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  text-decoration: none;
+}
