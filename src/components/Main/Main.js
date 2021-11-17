@@ -12,23 +12,17 @@ import './Main.css';
 function Main() {
 
   return (
-    <div className='main'>
-      <div className='main__section main__section_backgroung_eagle-green'>
-        <Header area={areas.areaMain} />
+    <>
+      <Header area={areas.areaMain} />
+      <main className='main'>
         <Promo />
-      </div>
-      <div className='main__section'>
         <AboutProject />
-      </div>
-      <div className='main__section main__section_backgroung_signal-black'>
         <Techs />
-      </div>
-      <div className='main__section'>
         <AboutMe />
         <Portfolio />
-        <Footer />
-      </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   );
 }
 

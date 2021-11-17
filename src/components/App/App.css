@@ -10,6 +10,9 @@
 }
 
 .app__content{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   min-width: 320px;
   margin: 0 auto 0;
 }

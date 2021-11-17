@@ -4,17 +4,3 @@
   flex-direction: column;
   width: 100%;
 }
-
-.main__section{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.main__section_backgroung_eagle-green{
-  background-color: #073042;
-}
-
-.main__section_backgroung_signal-black{
-  background-color: #272727;
-}

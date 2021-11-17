@@ -1,22 +1,25 @@
 import React from 'react';
+import { techsText } from '../../utils/constants';
 import './Techs.css';
 
 function Techs() {
 
   return (
-    <section className='techs'>
-      <h2 className='techs__title'>Технологии</h2>
-      <h3 className='techs__main-title'>7 технологий</h3>
-      <p className='techs__description'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
-      <ul className='techs__list'>
-        <li className='techs__item'>HTML</li>
-        <li className='techs__item'>CSS</li>
-        <li className='techs__item'>JS</li>
-        <li className='techs__item'>React</li>
-        <li className='techs__item'>Git</li>
-        <li className='techs__item'>Express.js</li>
-        <li className='techs__item'>mongoDB</li>
-      </ul>
+    <section className='techs techs_background_signal-black'>
+      <div className='techs__container'>
+        <h2 className='techs__title'>{techsText.title}</h2>
+        <h3 className='techs__main-title'>{techsText.mainTitle}</h3>
+        <p className='techs__description'>{techsText.description}</p>
+        <ul className='techs__list'>
+          <li className='techs__item'>{techsText.items.html}</li>
+          <li className='techs__item'>{techsText.items.css}</li>
+          <li className='techs__item'>{techsText.items.js}</li>
+          <li className='techs__item'>{techsText.items.react}</li>
+          <li className='techs__item'>{techsText.items.git}</li>
+          <li className='techs__item'>{techsText.items.express}</li>
+          <li className='techs__item'>{techsText.items.mongo}</li>
+        </ul>
+      </div>
     </section>
   );
 }

@@ -1,12 +1,15 @@
 import React from 'react';
+import { promoText } from '../../utils/constants';
 import './Promo.css';
 
 function Promo() {
 
   return (
-    <section className='promo'>
-      <h1 className='promo__title'>Учебный проект студента факультета Веб-разработки.</h1>
-      <div className='promo__curve'></div>
+    <section className='promo promo_background_eagle-green'>
+      <div className='promo__container'>
+        <h1 className='promo__title'>{promoText.title}</h1>
+        <div className='promo__curve'></div>
+      </div>
     </section>
   );
 }

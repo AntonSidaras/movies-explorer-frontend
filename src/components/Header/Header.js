@@ -9,23 +9,25 @@ import './Header.css';
 
 function Header({ area }) {
   const user = React.useContext(CurrentUserContext);
-  const isMovieArea = area === (areas.areaMovies || areas.areaSavedMovies);
-  const isMainArea = area === areas.areaMain;
+  const isAreaMovie = area === (areas.areaMovies || areas.areaSavedMovies);
+  const isAreaMain = area === areas.areaMain;
 
-  const navTab = isMovieArea ? <NavTab /> : <></>;
-  const accountButton = isMovieArea ? <AccountButtons /> : <></>;
-  const authButtons = isMainArea ? <AuthButtons /> : <></>;
+  const navTab = isAreaMovie ? <NavTab /> : <></>;
+  const accountButton = isAreaMovie ? <AccountButtons /> : <></>;
+  const authButtons = isAreaMain ? <AuthButtons /> : <></>;
   console.log(user);
 
   return (
-    <header className='header'>
-      <div className='header__left-content'>
-        <img className='header__logo' src={projectLogo} alt='Логотип проекта Movies Explorer' />
-        {navTab}
-      </div>
-      <div className='header__right-content'>
-        {authButtons}
-        {accountButton}
+    <header className={`header ${isAreaMain ? "header_background_eagle-green" : ""}`}>
+      <div className='header__container'>
+        <div className='header__left-content'>
+          <img className='header__logo' src={projectLogo} alt='Логотип проекта Movies Explorer' />
+          {navTab}
+        </div>
+        <div className='header__right-content'>
+          {authButtons}
+          {accountButton}
+        </div>
       </div>
     </header>
   );

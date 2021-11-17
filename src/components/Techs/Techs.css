@@ -1,5 +1,14 @@
 .techs{
   display: flex;
+  width: 100%;
+}
+
+.techs_background_signal-black{
+  background-color: #272727;
+}
+
+.techs__container{
+  display: flex;
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
