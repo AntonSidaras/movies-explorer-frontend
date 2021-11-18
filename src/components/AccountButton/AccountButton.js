@@ -5,7 +5,7 @@ import './AccountButton.css';
 function AccountButton() {
 
   return (
-    <Link className='account-button' to='/movies' />
+    <Link className='account-button' to='/profile' />
   );
 }
 

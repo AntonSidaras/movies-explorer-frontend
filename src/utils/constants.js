@@ -2,6 +2,7 @@ const areas = {
   areaMain: 'main',
   areaMovies: 'movies',
   areaSavedMovies: 'savedMovies',
+  areaProfile: 'profile',
   areaAuth: 'auth',
 };
 
@@ -53,6 +54,13 @@ const footerText = {
   },
 }
 
+const navTabText = {
+  links: {
+    movies: 'Фильмы',
+    savedMovies: 'Сохранённые Фильмы'
+  }
+}
+
 const portfolioText = {
   title: 'Поротфолио',
   textItem: {
@@ -87,6 +95,7 @@ export {
   aboutProjectText,
   authButtonText,
   footerText,
+  navTabText,
   portfolioText,
   promoText,
   techsText

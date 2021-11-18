@@ -9,16 +9,16 @@ import './Header.css';
 
 function Header({ area }) {
   const user = React.useContext(CurrentUserContext);
-  const isAreaMovie = area === (areas.areaMovies || areas.areaSavedMovies);
-  const isAreaMain = area === areas.areaMain;
+  const isAreaAuthorized = (area === areas.areaMovies || area === areas.areaSavedMovies || area === areas.areaProfile);
+  const isAreaUnauthorized = area === areas.areaMain;
 
-  const navTab = isAreaMovie ? <NavTab /> : <></>;
-  const accountButton = isAreaMovie ? <AccountButtons /> : <></>;
-  const authButtons = isAreaMain ? <AuthButtons /> : <></>;
+  const navTab = isAreaAuthorized ? <NavTab /> : <></>;
+  const accountButton = isAreaAuthorized ? <AccountButtons /> : <></>;
+  const authButtons = isAreaUnauthorized ? <AuthButtons /> : <></>;
   console.log(user);
 
   return (
-    <header className={`header ${isAreaMain ? "header_background_eagle-green" : ""}`}>
+    <header className={`header ${isAreaUnauthorized ? "header_background_eagle-green" : ""}`}>
       <div className='header__container'>
         <div className='header__left-content'>
           <img className='header__logo' src={projectLogo} alt='Логотип проекта Movies Explorer' />

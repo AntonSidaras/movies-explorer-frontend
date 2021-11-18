@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -10,9 +11,12 @@ import NotFound from '../NotFound/NotFound';
 import './App.css';
 
 function App() {
+
+  const [currentUser, setCurrentUser] = React.useState({ name: "Антон", email: 'a.sidaras@yandex.ru', id: 0 });
+
   return (
     <Router>
-      <CurrentUserContext.Provider value={{ isLoggedIn: false }}>
+      <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: false }}>
         <div className='app app__content'>
           <Routes>
             {/* О проекте */}
