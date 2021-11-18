@@ -70,6 +70,16 @@ const portfolioText = {
   }
 }
 
+const profileText = {
+  title: 'Привет, ',
+  placeholders: {
+    name: 'Имя',
+    email: 'E-mail'
+  },
+  editButtonText: 'Редактировать',
+  logoutButtonText: 'Выйти из аккаунта'
+}
+
 const promoText = {
   title: 'Учебный проект студента факультета Веб-разработки.'
 }
@@ -97,6 +107,7 @@ export {
   footerText,
   navTabText,
   portfolioText,
+  profileText,
   promoText,
   techsText
 }

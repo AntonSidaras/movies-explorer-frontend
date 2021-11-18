@@ -16,6 +16,10 @@
   height: 74px;
 }
 
+.header__container_width_full{
+  width: 100%;
+}
+
 .header_background_eagle-green{
   background-color: #073042;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
-import { areas } from '../../utils/constants';
+import { areas, profileText } from '../../utils/constants';
 import './Profile.css';
 
 function Profile() {
@@ -13,17 +13,17 @@ function Profile() {
     <>
       <Header area={areas.areaProfile} />
       <section className='profile__section'>
-        <h2 className='profile__title'>Привет, {user.currentUser.name}</h2>
+        <h2 className='profile__title'>{profileText.title} {user.currentUser.name}</h2>
         <form className='profile__form' noValidate>
           <fieldset className='profile__fieldset'>
             <input className='profile__input' value={user.currentUser.name} />
-            <span className='profile__special-placeholder'>Имя</span>
+            <span className='profile__special-placeholder'>{profileText.placeholders.name}</span>
             <input className='profile__input' value={user.currentUser.email} />
-            <span className='profile__special-placeholder'>E-mail</span>
+            <span className='profile__special-placeholder'>{profileText.placeholders.email}</span>
           </fieldset>
-          <button className='profile__edit-button'>Редактировать</button>
+          <button className='profile__edit-button'>{profileText.editButtonText}</button>
         </form>
-        <Link className='profile__logout' to='/'>Выйти из аккаунта</Link>
+        <Link className='profile__logout' to='/'>{profileText.logoutButtonText}</Link>
       </section>
     </>
   );
