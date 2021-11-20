@@ -6,6 +6,14 @@ const areas = {
   areaAuth: 'auth',
 };
 
+const appInitValues = {
+  user: {
+    name: "Антон",
+    email: 'a.sidaras@yandex.ru',
+    id: 0
+  }
+}
+
 const aboutMeText = {
   title: 'Студент',
   name: 'Антон',
@@ -54,6 +62,18 @@ const footerText = {
   },
 }
 
+const loginText = {
+  title: 'Рады видеть!',
+  captions: {
+    email: 'E-mail',
+    password: 'Пароль'
+  },
+  errorText: 'Что-то пошло не так...',
+  buttonText: 'Войти',
+  text: 'Ещё не зарегистрированы?',
+  singUpText: 'Регистрация'
+}
+
 const navTabText = {
   links: {
     movies: 'Фильмы',
@@ -84,6 +104,19 @@ const promoText = {
   title: 'Учебный проект студента факультета Веб-разработки.'
 }
 
+const registerText = {
+  title: 'Добро пожаловать!',
+  captions: {
+    name: 'Имя',
+    email: 'E-mail',
+    password: 'Пароль'
+  },
+  errorText: 'Что-то пошло не так...',
+  buttonText: 'Зарегистрироваться',
+  text: 'Уже зарегистрированы?',
+  singInText: 'Войти'
+}
+
 const techsText = {
   title: 'Технологии',
   mainTitle: '7 технологий',
@@ -101,13 +134,16 @@ const techsText = {
 
 export {
   areas,
+  appInitValues,
   aboutMeText,
   aboutProjectText,
   authButtonText,
   footerText,
+  loginText,
   navTabText,
   portfolioText,
   profileText,
   promoText,
+  registerText,
   techsText
 }

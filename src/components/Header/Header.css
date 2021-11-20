@@ -17,6 +17,8 @@
 }
 
 .header__container_width_full{
+  margin: 52px auto 0 auto;
+  max-width: 396px;
   width: 100%;
 }
 

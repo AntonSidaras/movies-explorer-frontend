@@ -1,27 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
-import { areas } from '../../utils/constants';
+import { areas, loginText } from '../../utils/constants';
 import './Login.css';
 
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
+
+  const navigate = useNavigate();
 
   return (
     <>
       <Header area={areas.areaAuth} />
       <section className='login__section'>
-        <h2 className='login__title'>Рады видеть!</h2>
+        <h2 className='login__title'>{loginText.title}</h2>
         <form className='login__form' noValidate>
           <fieldset className='login__fieldset'>
-            <input className='login__input' />
-            <input className='login__input' />
+            <label htmlFor='emailLogin' className='login__caption'>{loginText.captions.email}</label>
+            <input id='emailLogin' className='login__input' />
+            <label htmlFor='passwordLogin' className='login__caption'>{loginText.captions.password}</label>
+            <input id='passwordLogin' className='login__input' />
           </fieldset>
-          <span className='login__error'>Что-то пошло не так...</span>
-          <button className='login__sign-in-button'></button>
+          <span className='login__error'>{loginText.errorText}</span>
+          <button className='login__sign-in-button' onClick={() => { navigate('/movies') }}>{loginText.buttonText}</button>
         </form>
         <div className='login__bottom'>
-          <span className='login__text'>Ещё не зарегистрированы?</span>
-          <Link className='login__sign-up-link' to='/signup'>Регистрация</Link>
+          <span className='login__text'>{loginText.text}</span>
+          <Link className='login__sign-up-link' to='/signup'>{loginText.singUpText}</Link>
         </div>
       </section>
     </>

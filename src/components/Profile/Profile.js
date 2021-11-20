@@ -16,12 +16,12 @@ function Profile() {
         <h2 className='profile__title'>{profileText.title} {user.currentUser.name}</h2>
         <form className='profile__form' noValidate>
           <fieldset className='profile__fieldset'>
-            <input className='profile__input' value={user.currentUser.name} />
+            <input className='profile__input' value={user.currentUser.name} readOnly />
             <span className='profile__special-placeholder'>{profileText.placeholders.name}</span>
-            <input className='profile__input' value={user.currentUser.email} />
+            <input className='profile__input' value={user.currentUser.email} readOnly />
             <span className='profile__special-placeholder'>{profileText.placeholders.email}</span>
           </fieldset>
-          <button className='profile__edit-button'>{profileText.editButtonText}</button>
+          <button className='profile__edit-button'>{profileText.editButtonText} </button>
         </form>
         <Link className='profile__logout' to='/'>{profileText.logoutButtonText}</Link>
       </section>

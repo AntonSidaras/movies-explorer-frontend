@@ -8,11 +8,16 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
+import { appInitValues } from "../../utils/constants";
 import './App.css';
 
 function App() {
 
-  const [currentUser, setCurrentUser] = React.useState({ name: "Антон", email: 'a.sidaras@yandex.ru', id: 0 });
+  const [currentUser, setCurrentUser] = React.useState();
+
+  React.useEffect(() => {
+    setCurrentUser(appInitValues.user);
+  }, []);
 
   return (
     <Router>
