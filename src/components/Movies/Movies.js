@@ -4,14 +4,17 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import { areas } from '../../utils/constants';
+import './Movies.css';
 
 function Movies() {
 
   return (
     <>
       <Header area={areas.areaMovies} />
-      <SearchForm />
-      <MoviesCardList />
+      <main className='movies'>
+        <SearchForm />
+        <MoviesCardList />
+      </main>
       <Footer />
     </>
   );
