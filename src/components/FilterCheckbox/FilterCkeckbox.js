@@ -5,7 +5,7 @@ function FilterCheckbox() {
 
   return (
     <div className='filter-checkbox__container'>
-      <input className='filter-checkbox__checkbox' type='checkbox' id='shortMeter' onChange={() => { console.log('switch') }} />
+      <input className='filter-checkbox__checkbox' type='checkbox' id='shortMeter' onChange={console.log} />
       <label className='filter-checkbox__label' htmlFor='shortMeter' />
     </div>
   );
