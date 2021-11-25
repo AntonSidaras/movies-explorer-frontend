@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
-import { areas, registerText } from '../../utils/constants';
+import { appRoutes, areas, registerText } from '../../utils/constants';
 import './Register.css';
 
 import { useNavigate } from 'react-router-dom';
@@ -25,11 +25,11 @@ function Register() {
             <input id='passwordRegister' className='register__input' />
           </fieldset>
           <span className='register__error'>{registerText.errorText}</span>
-          <button className='register__sign-up-button' onClick={() => { navigate('/movies') }}>{registerText.buttonText}</button>
+          <button className='register__sign-up-button' onClick={() => { navigate(appRoutes.content.movies) }}>{registerText.buttonText}</button>
         </form>
         <div className='register__bottom'>
           <span className='register__text'>{registerText.text}</span>
-          <Link className='register__sign-in-link' to='/signin'>{registerText.singInText}</Link>
+          <Link className='register__sign-in-link' to={appRoutes.auth.signIn}>{registerText.singInText}</Link>
         </div>
       </section>
     </>

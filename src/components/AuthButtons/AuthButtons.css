@@ -14,6 +14,13 @@
   font-size: 12px;
   line-height: 16px;
   text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.auth-buttons__sign-up:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .auth-buttons__sign-in{
@@ -28,6 +35,13 @@
   text-decoration: none;
   background-color: #3DDC84;
   border-radius: 3px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.auth-buttons__sign-in:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .auth-buttons__text{

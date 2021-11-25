@@ -20,6 +20,7 @@
   font-size: 24px;
   line-height: 29px;
   color: #fff;
+  user-select: none;
 }
 
 .register__form{
@@ -97,6 +98,13 @@
   line-height: 17px;
   text-align: center;
   color: #fff;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.register__sign-up-button:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .register__bottom{
@@ -128,4 +136,11 @@
   text-align: center;
   text-decoration: none;
   color: #4285F4;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.register__sign-in-link:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }

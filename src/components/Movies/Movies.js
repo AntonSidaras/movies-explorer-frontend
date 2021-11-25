@@ -13,7 +13,7 @@ function Movies() {
       <Header area={areas.areaMovies} />
       <main className='movies'>
         <SearchForm />
-        <MoviesCardList />
+        <MoviesCardList area={areas.areaMovies} />
       </main>
       <Footer />
     </>

@@ -45,6 +45,13 @@
   padding: 0;
   text-decoration: none;
   border-bottom: 1px #424242 solid;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio__link:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .portfolio__text{

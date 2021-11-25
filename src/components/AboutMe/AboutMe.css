@@ -108,4 +108,11 @@
   line-height: 17px;
   color: #fff;
   text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.about-me__link:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }

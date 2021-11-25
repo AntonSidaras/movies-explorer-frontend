@@ -1,3 +1,22 @@
+const toSocial = {
+  vk: 'https://vk.com/antonsidaras',
+  git: 'https://github.com/AntonSidaras'
+}
+
+const appRoutes = {
+  root: '/',
+  content: {
+    movies: '/movies',
+    savedMovies: '/saved-movies',
+  },
+  profile: '/profile',
+  auth: {
+    signIn: '/signin',
+    signUp: '/signup',
+  },
+  any: '*'
+}
+
 const areas = {
   areaMain: 'main',
   areaMovies: 'movies',
@@ -24,7 +43,15 @@ const aboutMeText = {
   Полтора года назад решил уйти в веб-разработку, как в абсолютно неизвестную для меня область. Спустя полгода обучения
   в Яндекс.Практикуме сменил работу на разработчика веб-приложений в родном городе, а ещё через полгода получил Job Offer в американскую компанию EIS Group
   с филиалом в Санкт-Петербурге, теперь живу и работаю здесь. У меня есть любимая жена Полина и собака Майкл :)`,
-  links: { vk: 'VK', git: 'Github' },
+  links: {
+    vk: 'VK',
+    git: 'Github'
+  },
+  to: {
+    vk: toSocial.vk,
+    git: toSocial.git
+  },
+  alt: 'Portrait of Anton Sidaras'
 }
 
 const aboutProjectText = {
@@ -47,7 +74,7 @@ const aboutProjectText = {
   },
 }
 
-const authButtonText = {
+const authButtonsText = {
   signUp: 'Регистрация',
   signIn: 'Войти'
 }
@@ -60,6 +87,15 @@ const footerText = {
     vk: 'VK',
     git: 'Github'
   },
+  to: {
+    yandex: 'https://practicum.yandex.ru',
+    vk: toSocial.vk,
+    git: toSocial.git
+  }
+}
+
+const headerText = {
+  alt: 'Логотип проекта Movies Explorer'
 }
 
 const loginText = {
@@ -81,12 +117,27 @@ const navTabText = {
   }
 }
 
+const notFoundText = {
+  title: '404',
+  text: 'Страница не найдена',
+  backLink: 'Назад'
+}
+
+const moviesCardListText = {
+  buttonMoreText: 'Ещё'
+}
+
 const portfolioText = {
   title: 'Поротфолио',
   textItem: {
     static: 'Статичный сайт',
     flex: 'Адаптивный сайт',
     app: 'Одностаничное приложение'
+  },
+  to: {
+    static: 'https://github.com/AntonSidaras/how-to-learn',
+    flex: 'https://antonsidaras.github.io/russian-travel/',
+    app: 'https://asidaras.mesto.nomoredomains.club/sign-in'
   }
 }
 
@@ -117,6 +168,11 @@ const registerText = {
   singInText: 'Войти'
 }
 
+const searchFormText = {
+  placeholder: 'Фильм',
+  checkbox: 'Короткометражки'
+}
+
 const techsText = {
   title: 'Технологии',
   mainTitle: '7 технологий',
@@ -133,17 +189,22 @@ const techsText = {
 }
 
 export {
+  appRoutes,
   areas,
   appInitValues,
   aboutMeText,
   aboutProjectText,
-  authButtonText,
+  authButtonsText,
+  headerText,
   footerText,
   loginText,
   navTabText,
+  notFoundText,
+  moviesCardListText,
   portfolioText,
   profileText,
   promoText,
   registerText,
+  searchFormText,
   techsText
 }

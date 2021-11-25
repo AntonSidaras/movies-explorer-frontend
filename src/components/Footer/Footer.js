@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { footerText } from '../../utils/constants';
 import './Footer.css';
 
@@ -12,13 +11,13 @@ function Footer() {
         <span className='footer__copyright'>&#169; {footerText.copyright}</span>
         <ul className='footer__list'>
           <li className='footer__item'>
-            <Link className='footer__link' to='/#'>{footerText.links.yandex}</Link>
+            <a className='footer__link' target='_blank' rel='noopener noreferrer' href={footerText.to.yandex}>{footerText.links.yandex}</a>
           </li>
           <li className='footer__item'>
-            <Link className='footer__link' to='/#'>{footerText.links.git}</Link>
+            <a className='footer__link' target='_blank' rel='noopener noreferrer' href={footerText.to.git}>{footerText.links.git}</a>
           </li>
           <li className='footer__item'>
-            <Link className='footer__link' to='/#'>{footerText.links.vk}</Link>
+            <a className='footer__link' target='_blank' rel='noopener noreferrer' href={footerText.to.vk}>{footerText.links.vk}</a>
           </li>
         </ul>
       </div>

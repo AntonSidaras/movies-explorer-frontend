@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
-import { areas, loginText } from '../../utils/constants';
+import { appRoutes, areas, loginText } from '../../utils/constants';
 import './Login.css';
 
 import { useNavigate } from 'react-router-dom';
@@ -23,11 +23,11 @@ function Login() {
             <input id='passwordLogin' className='login__input' />
           </fieldset>
           <span className='login__error'>{loginText.errorText}</span>
-          <button className='login__sign-in-button' onClick={() => { navigate('/movies') }}>{loginText.buttonText}</button>
+          <button className='login__sign-in-button' onClick={() => { navigate(appRoutes.content.movies) }}>{loginText.buttonText}</button>
         </form>
         <div className='login__bottom'>
           <span className='login__text'>{loginText.text}</span>
-          <Link className='login__sign-up-link' to='/signup'>{loginText.singUpText}</Link>
+          <Link className='login__sign-up-link' to={appRoutes.auth.signUp}>{loginText.singUpText}</Link>
         </div>
       </section>
     </>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
-import { areas, profileText } from '../../utils/constants';
+import { appRoutes, areas, profileText } from '../../utils/constants';
 import './Profile.css';
 
 function Profile() {
@@ -23,7 +23,7 @@ function Profile() {
           </fieldset>
           <button className='profile__edit-button'>{profileText.editButtonText} </button>
         </form>
-        <Link className='profile__logout' to='/'>{profileText.logoutButtonText}</Link>
+        <Link className='profile__logout' to={appRoutes.root}>{profileText.logoutButtonText}</Link>
       </section>
     </>
   );

@@ -8,7 +8,7 @@ import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
-import { appInitValues } from "../../utils/constants";
+import { appRoutes, appInitValues } from "../../utils/constants";
 import './App.css';
 
 function App() {
@@ -24,20 +24,13 @@ function App() {
       <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: false }}>
         <div className='app app__content'>
           <Routes>
-            {/* О проекте */}
-            <Route exact path='/' element={<Main />} />
-            {/* Фильмы */}
-            <Route exact path='/movies' element={<Movies />} />
-            {/* Сохранённые фильмы */}
-            <Route exact path='/saved-movies' element={<SavedMovies />} />
-            {/* Профиль */}
-            <Route exact path='/profile' element={<Profile />} />
-            {/* Вход */}
-            <Route exact path='/signin' element={<Login />} />
-            {/* Регистрация */}
-            <Route exact path='/signup' element={<Register />} />
-            {/* 404 */}
-            <Route path='*' element={<NotFound />} />
+            <Route exact path={appRoutes.root} element={<Main />} />
+            <Route exact path={appRoutes.content.movies} element={<Movies />} />
+            <Route exact path={appRoutes.content.savedMovies} element={<SavedMovies />} />
+            <Route exact path={appRoutes.profile} element={<Profile />} />
+            <Route exact path={appRoutes.auth.signIn} element={<Login />} />
+            <Route exact path={appRoutes.auth.signUp} element={<Register />} />
+            <Route path={appRoutes.any} element={<NotFound />} />
           </Routes>
         </div>
       </CurrentUserContext.Provider>

@@ -20,6 +20,11 @@
   line-height: 29px;
   text-align: center;
   color: #fff;
+  user-select: none;
+}
+
+.profile__title:hover{
+  cursor: default;
 }
 
 .profile__form{
@@ -75,6 +80,7 @@
   text-align: left;
   color: #fff;
   text-align: left;
+  user-select: none;
 }
 
 .profile__special-placeholder:nth-of-type(2){
@@ -93,6 +99,14 @@
   font-size: 13px;
   line-height: 16px;
   color: #fff;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.profile__edit-button:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 .profile__logout{
@@ -106,4 +120,12 @@
   line-height: 16px;
   text-align: center;
   color: #EE3465;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.profile__logout:hover{
+  cursor: pointer;
+  opacity: 0.6;
 }

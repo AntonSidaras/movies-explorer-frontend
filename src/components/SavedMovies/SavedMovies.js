@@ -10,8 +10,10 @@ function SavedMovies() {
   return (
     <>
       <Header area={areas.areaSavedMovies} />
-      <SearchForm />
-      <MoviesCardList />
+      <main className='saved-movies'>
+        <SearchForm />
+        <MoviesCardList area={areas.areaSavedMovies} />
+      </main>
       <Footer />
     </>
   );

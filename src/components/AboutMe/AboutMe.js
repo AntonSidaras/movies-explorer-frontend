@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { aboutMeText } from '../../utils/constants';
 import avatar from '../../images/aboutme/me.jpg';
 import './AboutMe.css';
@@ -16,15 +15,15 @@ function AboutMe() {
           <p className='about-me__description'>{aboutMeText.description}</p>
           <ul className='about-me__list'>
             <li className='about-me__item'>
-              <Link className='about-me__link' to='#'>{aboutMeText.links.vk}</Link>
+              <a className='about-me__link' target='_blank' rel='noopener noreferrer' href={aboutMeText.to.vk}>{aboutMeText.links.vk}</a>
             </li>
             <li className='about-me__item'>
-              <Link className='about-me__link' to='#'>{aboutMeText.links.git}</Link>
+              <a className='about-me__link' target='_blank' rel='noopener noreferrer' href={aboutMeText.to.git}>{aboutMeText.links.git}</a>
             </li>
           </ul>
         </article>
         <div className='about-me__image-container'>
-          <img className='about-me__image' src={avatar} alt='Anton Sidaras' />
+          <img className='about-me__image' src={avatar} alt={aboutMeText.alt} />
         </div>
       </div>
     </section>
