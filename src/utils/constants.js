@@ -162,7 +162,7 @@ const registerText = {
     email: 'E-mail',
     password: 'Пароль'
   },
-  errorText: 'Что-то пошло не так...',
+  errorText: 'Регистрация не завершена',
   buttonText: 'Зарегистрироваться',
   text: 'Уже зарегистрированы?',
   singInText: 'Войти'
@@ -188,6 +188,12 @@ const techsText = {
   }
 }
 
+const defaultLoginTooltipData = {
+  title: '',
+  texts: [''],
+  image: ''
+}
+
 export {
   appRoutes,
   areas,
@@ -206,5 +212,6 @@ export {
   promoText,
   registerText,
   searchFormText,
-  techsText
+  techsText,
+  defaultLoginTooltipData
 }

@@ -32,6 +32,16 @@
   flex-direction: row;
 }
 
+.header__link{
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.header__link:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 .header__right-content{
   display: flex;
   flex-direction: row;
