@@ -50,15 +50,48 @@ function App() {
       <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: isLoggedIn }}>
         <div className='app app__content'>
           <Routes>
-            <Route exact path={appRoutes.root} element={<Main />} />
-            <Route exact path={appRoutes.content.movies} element={<Movies />} />
-            <Route exact path={appRoutes.content.savedMovies} element={<SavedMovies />} />
-            <Route exact path={appRoutes.profile} element={<Profile onSignOut={handleSignOut} onDisplayInfoTooltip={handleDisplayInfoTooltip} />} />
-            <Route exact path={appRoutes.auth.signIn} element={<Login onSignIn={handleSignIn} onDisplayInfoTooltip={handleDisplayInfoTooltip} />} />
-            <Route exact path={appRoutes.auth.signUp} element={<Register onSignUp={handleSignUp} onDisplayInfoTooltip={handleDisplayInfoTooltip} />} />
-            <Route path={appRoutes.any} element={<NotFound />} />
+            <Route
+              exact path={appRoutes.root}
+              element={<Main />}
+            />
+            <Route
+              exact path={appRoutes.content.movies}
+              element={<Movies />}
+            />
+            <Route
+              exact path={appRoutes.content.savedMovies}
+              element={<SavedMovies />}
+            />
+            <Route
+              exact path={appRoutes.profile}
+              element={<Profile
+                onSignOut={handleSignOut}
+                onDisplayInfoTooltip={handleDisplayInfoTooltip}
+              />}
+            />
+            <Route
+              exact path={appRoutes.auth.signIn}
+              element={<Login
+                onSignIn={handleSignIn}
+                onDisplayInfoTooltip={handleDisplayInfoTooltip}
+              />}
+            />
+            <Route exact path={appRoutes.auth.signUp}
+              element={<Register
+                onSignUp={handleSignUp}
+                onDisplayInfoTooltip={handleDisplayInfoTooltip}
+              />}
+            />
+            <Route
+              path={appRoutes.any}
+              element={<NotFound />}
+            />
           </Routes>
-          <InfoTooltip isOpen={isInfoTooltipOpen} data={loginTooltipData} onClose={toggleInfoTooltip} />
+          <InfoTooltip
+            isOpen={isInfoTooltipOpen}
+            data={loginTooltipData}
+            onClose={toggleInfoTooltip}
+          />
         </div>
       </CurrentUserContext.Provider>
     </Router>
