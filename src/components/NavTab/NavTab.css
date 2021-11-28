@@ -1,0 +1,27 @@
+.navigation{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  margin-left: 44px;
+  padding: 0;
+}
+
+.navigation__link{
+  margin: 0;
+  padding: 0;
+  margin-left: 16px;
+  text-decoration: none;
+  color: #ffffff;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.navigation__link:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.navigation__link:nth-of-type(1){
+  margin-left: 0;
+}
