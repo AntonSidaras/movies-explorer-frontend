@@ -5,7 +5,7 @@ import './MoviesCard.css';
 function MoviesCard({ movieCard, isSaved, onDeleteMoviesCard, onToggleSaveMovieCard }) {
 
   const user = React.useContext(CurrentUserContext);
-  const isAdded = movieCard.owner._id === user._id;
+  const isAdded = movieCard.owner._id === user.currentUser._id;
 
   function handleDelete() {
     onDeleteMoviesCard(movieCard);
@@ -19,7 +19,6 @@ function MoviesCard({ movieCard, isSaved, onDeleteMoviesCard, onToggleSaveMovieC
     <button className={`movies-card__add ${isAdded ? 'movies-card__add_active' : ''}`} type='button' onClick={handleToggleSave} /> :
     <button className='movies-card__remove' type='button' onClick={handleDelete} />;
 
-  //<SaveCheckbox movieCard={movieCard} onToggleSaveMovieCard={onToggleSaveMovieCard}
   return (
     <div className='movies-card' id={movieCard._id}>
       <div className='movies-card__col'>

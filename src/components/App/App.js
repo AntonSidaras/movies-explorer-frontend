@@ -21,7 +21,7 @@ function App() {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
   const [isLoaderOpen, setIsLoaderOpen] = React.useState(false);
   const [moviesCards, setMoviesCards] = React.useState(movieCards);
-  //const [savedMoviesCards, setSavedMoviesCard] = React.useState([]);
+  const [savedMoviesCards, setSavedMoviesCard] = React.useState([]);
 
   React.useEffect(() => {
     setCurrentUser(appInitValues.user);
@@ -29,11 +29,12 @@ function App() {
   }, []);
 
   function handleSignIn({ email, password }) {
+    console.log(email, password);
     setIsLoggedIn(true);
   }
 
   function handleSignUp({ name, email, password }) {
-    //console.log(name, email, password);
+    console.log(name, email, password);
   }
 
   function handleSignOut() {
@@ -42,21 +43,38 @@ function App() {
 
   function handleDeleteMovieCard(movieCard) {
     setMoviesCards((state) => state.filter(card => card._id !== movieCard._id));
+    setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
   }
 
   function handleToggleSaveMovieCard(movieCard) {
 
-    const result = {
-      _id: movieCard._id,
-      image: movieCard.image,
-      owner: {
-        _id: currentUser._id
-      }
-    };
+    const isAdded = movieCard.owner._id === currentUser._id;
 
-    setMoviesCards((state) => state.map((card) => card._id === movieCard._id ? result : card));
+    if (!isAdded) {
+      const result = {
+        _id: movieCard._id,
+        image: movieCard.image,
+        owner: {
+          _id: currentUser._id
+        }
+      };
 
-    console.log(moviesCards);
+      setMoviesCards((state) => state.map((card) => card._id === movieCard._id ? result : card));
+      setSavedMoviesCard([result, ...savedMoviesCards]);
+
+    }
+    else {
+      const result = {
+        _id: movieCard._id,
+        image: movieCard.image,
+        owner: {
+          _id: '123456789'
+        }
+      };
+
+      setMoviesCards((state) => state.map((card) => card._id === movieCard._id ? result : card));
+      setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
+    }
   }
 
   function toggleOpenInfoTooltip() {
@@ -92,7 +110,7 @@ function App() {
               exact path={appRoutes.content.savedMovies}
               element={
                 isLoggedIn ? <Movies
-                  moviesCards={moviesCards}
+                  moviesCards={savedMoviesCards}
                   isSaved={true}
                   onDeleteMoviesCard={handleDeleteMovieCard}
                 /> : <Navigate
