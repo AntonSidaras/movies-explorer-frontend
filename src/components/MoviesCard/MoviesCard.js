@@ -1,19 +1,29 @@
 import React from "react";
-import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
-import { areas } from "../../utils/constants";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import './MoviesCard.css';
 
-function MoviesCard({ data, area }) {
+function MoviesCard({ movieCard, isSaved, onDeleteMoviesCard, onToggleSaveMovieCard }) {
 
-  const isAreaMovies = area === areas.areaMovies;
-  const action = isAreaMovies ? <SaveCheckbox id={data.id} /> : <button className='movies-card__remove' />;
+  const user = React.useContext(CurrentUserContext);
+  const isAdded = movieCard.owner._id === user._id;
 
-  console.log(area);
+  function handleDelete() {
+    onDeleteMoviesCard(movieCard);
+  }
 
+  function handleToggleSave() {
+    onToggleSaveMovieCard(movieCard);
+  }
+
+  const action = !isSaved ?
+    <button className={`movies-card__add ${isAdded ? 'movies-card__add_active' : ''}`} type='button' onClick={handleToggleSave} /> :
+    <button className='movies-card__remove' type='button' onClick={handleDelete} />;
+
+  //<SaveCheckbox movieCard={movieCard} onToggleSaveMovieCard={onToggleSaveMovieCard}
   return (
-    <div className='movies-card' id={data.id}>
+    <div className='movies-card' id={movieCard._id}>
       <div className='movies-card__col'>
-        <img className='movies-card__img' src={data.url} alt='img' />
+        <img className='movies-card__img' src={movieCard.image} alt='img' />
         <div className='movies-card__row'>
           <h2 className='movies-card__title'>33 слова о дизайне</h2>
           {action}

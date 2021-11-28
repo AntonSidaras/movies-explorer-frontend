@@ -13,6 +13,7 @@ function Login({ onSignIn, onDisplayInfoTooltip }) {
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
 
+  const [isSignInError, setIsSignInError] = React.useState(false);
   const [isValidCredentials, setIsValidCredentials] = React.useState(false);
   const [errorText, setErrorText] = React.useState([]);
 
@@ -20,6 +21,7 @@ function Login({ onSignIn, onDisplayInfoTooltip }) {
 
     let errorTextLocal = [];
     setErrorText(errorTextLocal);
+    setIsSignInError(false);
     setIsValidCredentials(true);
 
     if (!emailRef.current.validity.valid) {
@@ -43,9 +45,11 @@ function Login({ onSignIn, onDisplayInfoTooltip }) {
         email: emailRef.current.value,
         password: passwordRef.current.value
       });
+      setIsSignInError(false);
       navigate(appRoutes.content.movies);
     }
     else {
+      setIsSignInError(true);
       onDisplayInfoTooltip({ title: 'Ошибка', texts: errorText, image: onFailureAuth });
     }
   }
@@ -64,16 +68,21 @@ function Login({ onSignIn, onDisplayInfoTooltip }) {
               type='email'
               required
               ref={emailRef}
+              onChange={checkValidCredentials}
             />
             <label htmlFor='passwordLogin' className='login__caption'>{loginText.captions.password}</label>
             <input
               id='passwordLogin'
-              className='login__input'
-              type='text'
+              className={`login__input ${isSignInError ? 'login__input_color_red' : ''}`}
+              type='password'
               required
               ref={passwordRef}
+              onChange={checkValidCredentials}
             />
           </fieldset>
+          <span
+            className={`login__error ${isSignInError ? 'login__error_visible' : ''}`}
+          >{loginText.errorText}</span>
           <button
             className='login__sign-in-button'
             type='submit'

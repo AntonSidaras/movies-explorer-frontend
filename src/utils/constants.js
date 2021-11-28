@@ -20,7 +20,6 @@ const appRoutes = {
 const areas = {
   areaMain: 'main',
   areaMovies: 'movies',
-  areaSavedMovies: 'savedMovies',
   areaProfile: 'profile',
   areaAuth: 'auth',
 };
@@ -29,7 +28,7 @@ const appInitValues = {
   user: {
     name: "Антон",
     email: 'a.sidaras@yandex.ru',
-    id: 0
+    _id: '1234567890123456789'
   }
 }
 
@@ -104,7 +103,7 @@ const loginText = {
     email: 'E-mail',
     password: 'Пароль'
   },
-  errorText: 'Что-то пошло не так...',
+  errorText: 'Вход не выполнен',
   buttonText: 'Войти',
   text: 'Ещё не зарегистрированы?',
   singUpText: 'Регистрация'

@@ -73,6 +73,11 @@
   text-align: left;
   color: #fff;
 }
+
+.register__input:focus{
+  outline: 1px solid #666;
+}
+
 .register__input:last-of-type{
   letter-spacing: 5px;
 }

@@ -49,13 +49,13 @@ function Register({ onSignUp, onDisplayInfoTooltip }) {
       password: passwordRef.current.value
     });
 
-    if (!isValidCredentials) {
-      onDisplayInfoTooltip({ title: 'Ошибка', texts: errorText, image: onFailureAuth });
-      setIsSignUpError(true);
-    }
-    else {
+    if (isValidCredentials) {
       onDisplayInfoTooltip({ title: 'Вы успешно зарегистрировались!', texts: [], image: onSuccessAuth });
       setIsSignUpError(false);
+    }
+    else {
+      onDisplayInfoTooltip({ title: 'Ошибка', texts: errorText, image: onFailureAuth });
+      setIsSignUpError(true);
     }
   }
 

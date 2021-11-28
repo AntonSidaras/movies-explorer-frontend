@@ -1,22 +1,24 @@
 import React from 'react'
 import './Loader.css'
 
-const Loader = () => {
+function Loader({ isOpen }) {
   return (
-    <div class="lds-default">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <section className={`loader ${isOpen ? 'loader_opened' : ''}`}>
+      <div className='loader__container'>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+        <div className='loader__child'></div>
+      </div>
+    </section>
   )
 };
 

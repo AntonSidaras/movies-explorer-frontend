@@ -16,25 +16,6 @@
   padding: 0;
 }
 
-.movies-card__remove{
-  display: block;
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  background-image: url('../../images/moviescard/remove.svg');
-  width: 16px;
-  height: 16px;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.movies-card__remove:hover{
-  cursor: pointer;
-  opacity: 0.6;
-}
-
 .movies-card-list__button-more{
   display: block;
   margin: 50px auto 0 auto;
