@@ -3,20 +3,18 @@ import { Link } from 'react-router-dom';
 import NavTab from '../NavTab/NavTab';
 import AuthButtons from '../AuthButtons/AuthButtons';
 import AccountButtons from '../AccountButton/AccountButton';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import projectLogo from '../../images/header/projectLogo.svg';
 import { appRoutes, areas, headerText } from '../../utils/constants';
 import './Header.css';
 
-function Header({ area }) {
+function Header({ area, isLoggedIn }) {
 
-  const user = React.useContext(CurrentUserContext);
   const isAreaMain = area === areas.areaMain;
   const isAreaAuth = area === areas.areaAuth;
 
-  const navTab = user.isLoggedIn ? <NavTab /> : <></>;
-  const accountButton = user.isLoggedIn ? <AccountButtons /> : <></>;
-  const authButtons = (!user.isLoggedIn && !isAreaAuth) ? <AuthButtons /> : <></>;
+  const navTab = isLoggedIn ? <NavTab /> : <></>;
+  const accountButton = isLoggedIn ? <AccountButtons /> : <></>;
+  const authButtons = (!isLoggedIn && !isAreaAuth) ? <AuthButtons /> : <></>;
 
   return (
     <header className={`header ${isAreaMain ? 'header_background_eagle-green' : ''}`}>

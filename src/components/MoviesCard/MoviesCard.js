@@ -1,23 +1,12 @@
 import React from "react";
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
 import './MoviesCard.css';
 
-function MoviesCard({ movieCard, isSaved, onDeleteMoviesCard, onToggleSaveMovieCard }) {
-
-  const user = React.useContext(CurrentUserContext);
-  const isAdded = movieCard.owner._id === user.currentUser._id;
-
-  function handleDelete() {
-    onDeleteMoviesCard(movieCard);
-  }
-
-  function handleToggleSave() {
-    onToggleSaveMovieCard(movieCard);
-  }
+function MoviesCard({ movieCard, isSaved }) {
 
   const action = !isSaved ?
-    <button className={`movies-card__add ${isAdded ? 'movies-card__add_active' : ''}`} type='button' onClick={handleToggleSave} /> :
-    <button className='movies-card__remove' type='button' onClick={handleDelete} />;
+    <SaveCheckbox movieCard={movieCard} /> :
+    <button className='movies-card__remove' type='button' />;
 
   return (
     <div className='movies-card' id={movieCard._id}>

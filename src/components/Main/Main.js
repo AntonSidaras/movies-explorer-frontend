@@ -13,7 +13,7 @@ function Main() {
 
   return (
     <>
-      <Header area={areas.areaMain} />
+      <Header area={areas.areaMain} isLoggedIn={false} />
       <main className='main'>
         <Promo />
         <AboutProject />

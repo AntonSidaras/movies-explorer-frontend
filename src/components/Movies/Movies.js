@@ -6,18 +6,16 @@ import Footer from '../Footer/Footer';
 import { areas } from '../../utils/constants';
 import './Movies.css';
 
-function Movies({ moviesCards, isSaved, onDeleteMoviesCard, onToggleSaveMovieCard }) {
+function Movies({ moviesCards, isSaved }) {
 
   return (
     <>
-      <Header area={areas.areaMovies} />
+      <Header area={areas.areaMovies} isLoggedIn={true} />
       <main className='movies'>
         <SearchForm />
         <MoviesCardList
           moviesCards={moviesCards}
           isSaved={isSaved}
-          onDeleteMoviesCard={onDeleteMoviesCard}
-          onToggleSaveMovieCard={onToggleSaveMovieCard}
         />
       </main>
       <Footer />

@@ -103,7 +103,7 @@ const loginText = {
     email: 'E-mail',
     password: 'Пароль'
   },
-  errorText: 'Вход не выполнен',
+  errorText: 'Что-то пошло не так...',
   buttonText: 'Войти',
   text: 'Ещё не зарегистрированы?',
   singUpText: 'Регистрация'
@@ -161,7 +161,7 @@ const registerText = {
     email: 'E-mail',
     password: 'Пароль'
   },
-  errorText: 'Регистрация не завершена',
+  errorText: 'Что-то пошло не так',
   buttonText: 'Зарегистрироваться',
   text: 'Уже зарегистрированы?',
   singInText: 'Войти'

@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { moviesCardListText } from "../../utils/constants";
 import './MoviesCardList.css';
 
-function MoviesCardList({ moviesCards, isSaved, onDeleteMoviesCard, onToggleSaveMovieCard }) {
+function MoviesCardList({ moviesCards, isSaved }) {
 
   return (
     <section className='movies-card-list'>
@@ -13,12 +13,13 @@ function MoviesCardList({ moviesCards, isSaved, onDeleteMoviesCard, onToggleSave
             key={item._id}
             movieCard={item}
             isSaved={isSaved}
-            onDeleteMoviesCard={onDeleteMoviesCard}
-            onToggleSaveMovieCard={onToggleSaveMovieCard}
           />
         ))}
       </div>
-      <button className='movies-card-list__button-more'>{moviesCardListText.buttonMoreText}</button>
+      <button
+        className={`movies-card-list__button-more ${isSaved ? 'movies-card-list__button-more_hidden' : ''}`}>
+        {moviesCardListText.buttonMoreText}
+      </button>
     </section>
   );
 }
