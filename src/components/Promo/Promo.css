@@ -37,3 +37,16 @@
   margin: 102px 0 60px 0;
   background-image: url('../../images/promo/curve.svg');
 }
+
+@media screen and (max-width: 800px) {
+  .promo__container{
+    width: 92.18%;
+  }
+  .promo__title{
+    margin: 300px auto 0 auto;
+    text-align: center;
+  }
+  .promo__curve{
+    margin: 140px auto 70px auto;
+  }
+}

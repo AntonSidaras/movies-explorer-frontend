@@ -29,6 +29,7 @@
 }
 
 .about-project__subtitle{
+  max-width: 550px;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -38,6 +39,7 @@
 }
 
 .about-project__text{
+  max-width: 550px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -93,4 +95,24 @@
   line-height: 17px;
   text-align: center;
   color: #8B8B8B;
+}
+
+@media screen and (max-width: 1024px) {
+  .about-project{
+    width: 92.18%;
+  }
+  .about-project__title{
+    margin: 90px 0 0 0;
+  }
+  .about-project__subtitle{
+    max-width: 319px;
+  }
+  .about-project__text{
+    max-width: 319px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-project__progress{
+    margin: 93px 0 90px 0;
+  }
 }
