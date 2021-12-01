@@ -73,3 +73,8 @@
   opacity: 0.6;
 }
 
+@media screen and (max-width: 800px) {
+  .footer{
+    margin: 160px auto 0 auto;
+  }
+}

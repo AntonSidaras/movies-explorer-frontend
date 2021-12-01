@@ -3,14 +3,13 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import { areas } from '../../utils/constants';
 import './Movies.css';
 
-function Movies({ moviesCards, isSaved }) {
+function Movies({ area, moviesCards, isSaved }) {
 
   return (
     <>
-      <Header area={areas.areaMovies} isLoggedIn={true} />
+      <Header area={area} isLoggedIn={true} />
       <main className='movies'>
         <SearchForm />
         <MoviesCardList

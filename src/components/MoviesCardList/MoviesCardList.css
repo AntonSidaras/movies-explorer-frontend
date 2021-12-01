@@ -46,3 +46,13 @@
 .movies-card-list__button-more_hidden{
   display: none;
 }
+
+@media screen and (max-width: 1024px) {
+  .movies-card-list{
+    width: 92.18%;
+  }
+  .movies-card-list__container{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 42px;
+  }
+}

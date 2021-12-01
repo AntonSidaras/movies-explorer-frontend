@@ -27,7 +27,7 @@
   font-size: 40px;
   line-height: 52px;
   letter-spacing: -0.04em;
-  color: #FFFFFF;
+  color: #fff;
 }
 
 .promo__curve{
@@ -35,7 +35,12 @@
   width: 722px;
   height: 244px;
   margin: 102px 0 60px 0;
-  background-image: url('../../images/promo/curve.svg');
+}
+
+.promo__curve-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 800px) {
@@ -47,6 +52,9 @@
     text-align: center;
   }
   .promo__curve{
+    width: 680px;
+    height: 230px;
     margin: 140px auto 70px auto;
+    overflow: hidden;
   }
 }

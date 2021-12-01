@@ -63,6 +63,7 @@
 }
 
 .search-form__filter{
+  display: flex;
   margin: 33px 0 0 0;
   padding: 0;
 }
@@ -75,10 +76,23 @@
   font-size: 13px;
   line-height: 18px;
   color: #fff;
+  order: 2;
 }
-
 
 .search-form__filter{
   display: flex;
   flex-direction: row;
+}
+
+@media screen and (max-width: 1024px) {
+  .search-form{
+    width: 92.18%;
+  }
+  .search-form__span{
+    margin: 0 16px 0 0;
+    order: 1;
+  }
+  .search-form__filter{
+    justify-content: end;
+  }
 }

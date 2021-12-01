@@ -8,7 +8,7 @@ import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Loader from '../Loader/Loader';
-import { appRoutes, defaultLoginTooltipData } from "../../utils/constants";
+import { areas, appRoutes, defaultLoginTooltipData } from "../../utils/constants";
 import movieCards from "../../utils/movieCards";
 import './App.css';
 
@@ -40,6 +40,7 @@ function App() {
             exact path={appRoutes.content.movies}
             element={
               <Movies
+                area={areas.areaMovies}
                 moviesCards={movieCards}
                 isSaved={false}
               />}
@@ -48,6 +49,7 @@ function App() {
             exact path={appRoutes.content.savedMovies}
             element={
               <Movies
+                area={areas.areaSavedMovies}
                 moviesCards={movieCards}
                 isSaved={true}
               />}

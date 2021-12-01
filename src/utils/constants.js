@@ -20,6 +20,7 @@ const appRoutes = {
 const areas = {
   areaMain: 'main',
   areaMovies: 'movies',
+  areaSavedMovies: 'saved-movies',
   areaProfile: 'profile',
   areaAuth: 'auth',
 };
@@ -107,8 +108,9 @@ const loginText = {
   singUpText: 'Регистрация'
 }
 
-const navTabText = {
+const navText = {
   links: {
+    root: 'Главная',
     movies: 'Фильмы',
     savedMovies: 'Сохранённые Фильмы'
   }
@@ -201,7 +203,7 @@ export {
   headerText,
   footerText,
   loginText,
-  navTabText,
+  navText,
   notFoundText,
   moviesCardListText,
   portfolioText,

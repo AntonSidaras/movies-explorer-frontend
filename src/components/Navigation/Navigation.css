@@ -1,0 +1,125 @@
+.navigation{
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease-in;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.navigation_opened{
+  visibility: visible;
+  opacity: 1;
+}
+
+.navigation__container{
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  width: 520px;
+  height: 100%;
+  background-color: #202020;
+  z-index: 2;
+}
+
+.navigation__close-button{
+  justify-self: right;
+  width: 22px;
+  height: 22px;
+  border: none;
+  outline: none;
+  margin: 22.4px 22.4px 0 auto;
+  padding: 0;
+  background-color: transparent;
+  background-image: url('../../images/navigation/close.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.navigation__close-button:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.navigation__content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+  height: 100%;
+  margin: 0 auto 0 auto;
+  padding: 0;
+}
+
+.navigation__list{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 159px auto 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.navigation__item{
+  display: block;
+  margin: 0 auto 28px auto;
+  padding: 0 0 4px 0;
+}
+
+.navigation__item:last-of-type{
+  margin: auto;
+}
+
+.navigation__item_type_current{
+  border-bottom: 2px solid #fff;
+}
+
+.navigation__link{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.navigation__link:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.navigation__item_type_current{
+  pointer-events: none;
+}
+
+.navigation__account-link{
+  width: 100px;
+  height: 30px;
+  margin: 0 auto 92px auto;
+  padding: 0 0 4px 0;
+  background-image: url('../../images/header/profileLogo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.navigation__account-link_type_current{
+  border-bottom: 2px solid #fff;
+}
+
+.navigation__account-link:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}

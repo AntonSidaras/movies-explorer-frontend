@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import NavTab from '../NavTab/NavTab';
 import AuthButtons from '../AuthButtons/AuthButtons';
-import AccountButtons from '../AccountButton/AccountButton';
+import AccountButton from '../AccountButton/AccountButton';
+import ExtraButton from '../ExtraButton/ExtraButton';
 import projectLogo from '../../images/header/projectLogo.svg';
 import { appRoutes, areas, headerText } from '../../utils/constants';
 import './Header.css';
@@ -13,7 +14,8 @@ function Header({ area, isLoggedIn }) {
   const isAreaAuth = area === areas.areaAuth;
 
   const navTab = isLoggedIn ? <NavTab /> : <></>;
-  const accountButton = isLoggedIn ? <AccountButtons /> : <></>;
+  const accountButton = isLoggedIn ? <AccountButton /> : <></>;
+  const extraButton = isLoggedIn ? <ExtraButton area={area} /> : <></>;
   const authButtons = (!isLoggedIn && !isAreaAuth) ? <AuthButtons /> : <></>;
 
   return (
@@ -28,6 +30,7 @@ function Header({ area, isLoggedIn }) {
         <div className='header__right-content'>
           {authButtons}
           {accountButton}
+          {extraButton}
         </div>
       </div>
     </header>

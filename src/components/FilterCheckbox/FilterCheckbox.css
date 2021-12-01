@@ -1,3 +1,6 @@
+.filter-checkbox__container{
+	order: 1;
+}
 .filter-checkbox__label {	margin: 2em;}
 .filter-checkbox__checkbox {	display: none;}
 .filter-checkbox__checkbox + .filter-checkbox__label,
@@ -37,3 +40,9 @@
 
 #shortMeter:checked + .filter-checkbox__label {	background-color: #3DDC84; }
 #shortMeter:checked + .filter-checkbox__label::before { color: #fff; }
+
+@media screen and (max-width: 1024px) {
+  .filter-checkbox__container{
+    order: 2;
+  }
+}

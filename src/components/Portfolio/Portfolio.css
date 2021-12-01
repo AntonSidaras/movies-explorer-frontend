@@ -31,10 +31,12 @@
 .portfolio__item{
   margin: 0 0 20px 0;
   padding: 0;
+  border-bottom: 1px #424242 solid;
 }
 
 .portfolio__item:last-child{
   margin: 0;
+  border-bottom: none;
 }
 
 .portfolio__link{
@@ -44,7 +46,6 @@
   margin: 0 0 20px 0;
   padding: 0;
   text-decoration: none;
-  border-bottom: 1px #424242 solid;
   opacity: 1;
   transition: opacity 0.3s ease;
 }
@@ -52,6 +53,10 @@
 .portfolio__link:hover{
   cursor: pointer;
   opacity: 0.6;
+}
+
+.portfolio__link_type_last{
+  border: none
 }
 
 .portfolio__text{
@@ -73,4 +78,17 @@
   background-image: url('../../images/portfolio/arrow.svg');
   background-repeat: no-repeat;
   background-position: center;
+}
+
+@media screen and (max-width: 800px) {
+  .portfolio{
+    margin: 90px auto 0 auto;
+    width: 92.18%;
+  }
+  .portfolio__text{
+    font-size: 28px;
+  }
+  .portfolio__item{
+    border-bottom: 1px #E5E5E5 solid;
+  }
 }
