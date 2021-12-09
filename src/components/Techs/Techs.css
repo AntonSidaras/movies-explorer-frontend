@@ -112,6 +112,15 @@
   
 }
 
+@media screen and (max-width: 800px) {
+  .techs__container{
+    width: 86.98%;
+  }
+  .techs__title{
+    margin: 88px 0 0 0;
+  }
+}
+
 @media screen and (max-width: 720px) {
   .techs__container{
     width: 92.18%;

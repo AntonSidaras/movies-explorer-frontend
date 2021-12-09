@@ -135,12 +135,13 @@
 
 @media screen and (max-width: 800px) {
   .about-me{
-    width: 92.18%;
+    width: 86.98%;
   }
   .about-me__title{
     margin: 90px 0 0 0;
   }
   .about-me__name{
+    margin-bottom: 10px;
     font-size: 40px;
     line-height: 40px;
   }

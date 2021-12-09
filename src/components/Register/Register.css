@@ -1,5 +1,6 @@
 .register{
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -160,4 +161,10 @@
 .register__sign-in-link:hover{
   cursor: pointer;
   opacity: 0.6;
+}
+
+@media screen and (max-width: 800px) {
+  .register{
+    margin-top: 162px;
+  }
 }

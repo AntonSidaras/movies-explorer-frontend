@@ -121,6 +121,19 @@
     margin: 93px 0 90px 0;
   }
 }
+
+@media screen and (max-width: 800px) {
+  .about-project{
+    width: 86.98%;
+  }
+  .about-project__text{
+    margin-top: 8px;
+  }
+  .about-project__progress{
+    grid-template-columns: 1.08fr 4fr;
+  }
+}
+
 @media screen and (max-width: 720px) {
   .about-project__info{
     display: grid;

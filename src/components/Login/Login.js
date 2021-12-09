@@ -15,9 +15,9 @@ function Login() {
   }
 
   return (
-    <>
+    <section className='login'>
       <Header area={areas.areaAuth} isLoggedIn={false} />
-      <section className='login__section'>
+      <div className='login__section'>
         <h2 className='login__title'>{loginText.title}</h2>
         <form className='login__form' onSubmit={handleSubmit} noValidate>
           <fieldset className='login__fieldset'>
@@ -48,8 +48,8 @@ function Login() {
           <span className='login__text'>{loginText.text}</span>
           <Link className='login__sign-up-link' to={appRoutes.auth.signUp}>{loginText.singUpText}</Link>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 

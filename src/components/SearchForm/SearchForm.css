@@ -87,12 +87,14 @@
 @media screen and (max-width: 1024px) {
   .search-form{
     width: 92.18%;
+    margin: 80px auto 0 auto;
   }
   .search-form__span{
     margin: 0 16px 0 0;
     order: 1;
   }
   .search-form__filter{
+    margin: 31px 0 0 0;
     justify-content: end;
   }
 }
