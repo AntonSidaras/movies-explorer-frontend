@@ -17,7 +17,7 @@ function Movies({ area, moviesCards, isSaved }) {
           isSaved={isSaved}
         />
       </main>
-      <Footer />
+      <Footer area={area} />
     </>
   );
 }

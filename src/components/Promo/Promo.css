@@ -1,6 +1,7 @@
 .promo{
   display: flex;
   width: 100%;
+  overflow: hidden;
 }
 
 .promo_background_eagle-green{
@@ -8,6 +9,7 @@
 }
 
 .promo__container{
+  position: relative;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -19,11 +21,11 @@
 }
 
 .promo__title{
-  width: 624px;
-  height: 104px;
-  margin: 50px 0 0 12px;
+  width: 630px;
+  height: 105px;
+  margin: 50px 0 406px 10px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 40px;
   line-height: 52px;
   letter-spacing: -0.04em;
@@ -31,6 +33,9 @@
 }
 
 .promo__curve{
+  position: absolute;
+  bottom: 0;
+  right: 0;
   align-self: flex-end;
   width: 722px;
   height: 244px;
@@ -48,13 +53,31 @@
     width: 92.18%;
   }
   .promo__title{
-    margin: 300px auto 0 auto;
+    max-width: 680px;
+    margin: 300px auto 440px auto;
     text-align: center;
   }
   .promo__curve{
     width: 680px;
     height: 230px;
-    margin: 140px auto 70px auto;
-    overflow: hidden;
+    bottom: 40px;
+    left: 50%;
+    margin: 0;
+    margin-left: -340px;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .promo__container{
+    width: 91.25%;
+  }
+  .promo__title{
+    max-width: 560px;
+    min-width: 300px;
+    width: 93%;
+    margin: 183px auto 330px auto;
+    text-align: center;
+    font-size: 31px;
+    line-height: 39px;
   }
 }

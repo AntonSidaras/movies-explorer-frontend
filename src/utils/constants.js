@@ -127,11 +127,11 @@ const moviesCardListText = {
 }
 
 const portfolioText = {
-  title: 'Поротфолио',
+  title: 'Портфолио',
   textItem: {
     static: 'Статичный сайт',
     flex: 'Адаптивный сайт',
-    app: 'Одностаничное приложение'
+    app: 'Одностраничное приложение'
   },
   to: {
     static: 'https://github.com/AntonSidaras/how-to-learn',

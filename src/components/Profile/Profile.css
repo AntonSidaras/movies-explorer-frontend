@@ -71,7 +71,7 @@
 
 .profile__input:last-of-type{
   border: none;
-  padding: 16px 0 0 0;
+  padding: 18px 0 0 0;
 }
 
 .profile__special-placeholder{
@@ -89,7 +89,7 @@
 }
 
 .profile__special-placeholder:nth-of-type(2){
-  top: 46px;
+  top: 48px;
 }
 
 .profile__edit-button{

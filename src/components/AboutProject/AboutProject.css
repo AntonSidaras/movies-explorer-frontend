@@ -22,16 +22,18 @@
 
 .about-project__info{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.07fr 1fr;
   grid-template-rows: 1fr 1fr;
   margin: 70px 0 0 0;
   padding: 0;
 }
 
 .about-project__subtitle{
+  margin: 0;
+  padding: 0;
   max-width: 550px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.04em;
@@ -39,9 +41,12 @@
 }
 
 .about-project__text{
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
   max-width: 550px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
   color: #fff;
@@ -114,5 +119,20 @@
   }
   .about-project__progress{
     margin: 93px 0 90px 0;
+  }
+}
+@media screen and (max-width: 720px) {
+  .about-project__info{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+  .about-project__subtitle{
+    max-width: 284px;
+  }
+  .about-project__text{
+    max-width: 284px;
+    font-size: 12px;
+    line-height: 18px;
   }
 }

@@ -21,7 +21,7 @@ function Main() {
         <AboutMe />
         <Portfolio />
       </main>
-      <Footer />
+      <Footer area={areas.areaMain} />
     </>
   );
 }

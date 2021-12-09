@@ -35,7 +35,10 @@ function App() {
     <Router>
       <div className='app app__content'>
         <Routes>
-          <Route exact path={appRoutes.root} element={<Main />} />
+          <Route
+            exact path={appRoutes.root}
+            element={<Main />}
+          />
           <Route
             exact path={appRoutes.content.movies}
             element={
@@ -61,14 +64,20 @@ function App() {
                 onDisplayInfoTooltip={handleDisplayInfoTooltip}
               />}
           />
-          <Route exact path={appRoutes.auth.signIn} element={<Login />} />
+          <Route
+            exact path={appRoutes.auth.signIn}
+            element={<Login />}
+          />
           <Route exact path={appRoutes.auth.signUp}
             element={
               <Register
                 onDisplayInfoTooltip={handleDisplayInfoTooltip}
               />}
           />
-          <Route path={appRoutes.any} element={<NotFound />} />
+          <Route
+            path={appRoutes.any}
+            element={<NotFound />}
+          />
         </Routes>
         <InfoTooltip
           isOpen={isInfoTooltipOpen}

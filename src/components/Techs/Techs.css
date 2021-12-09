@@ -20,7 +20,7 @@
 }
 
 .techs__title{
-  margin: 110px 0 0 0;
+  margin: 95px 0 0 0;
   padding: 0 0 23px 0;
   border-bottom: 1px solid #dadada;
   font-size: 22px;
@@ -34,7 +34,7 @@
   margin: 90px 0 0 0;
   padding: 0;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 50px;
   line-height: 58px;
   text-align: center;
@@ -48,7 +48,7 @@
   margin: 26px auto 0 auto;
   padding: 0;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
   text-align: center;
@@ -110,4 +110,18 @@
     margin: 83px auto 90px auto;
   }
   
+}
+
+@media screen and (max-width: 720px) {
+  .techs__container{
+    width: 92.18%;
+  }
+  .techs__list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 100px auto 100px auto;
+  }
 }

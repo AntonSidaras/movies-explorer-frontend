@@ -67,7 +67,7 @@
   background: #2F2F2F;
   border-radius: 8px;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 500;
   font-size: 13px;
   line-height: 16px;
   text-align: left;
@@ -79,7 +79,7 @@
 }
 
 .register__input:last-of-type{
-  letter-spacing: 5px;
+  letter-spacing: 1px;
 }
 
 .register__input_color_red{

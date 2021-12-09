@@ -1,11 +1,13 @@
 import React from 'react';
-import { footerText } from '../../utils/constants';
+import { areas, footerText } from '../../utils/constants';
 import './Footer.css';
 
-function Footer() {
+function Footer({ area }) {
+
+  const isAreaMovies = (area === areas.areaMovies) || (area === areas.areaSavedMovies);
 
   return (
-    <footer className='footer'>
+    <footer className={`footer ${!isAreaMovies ? '' : 'footer_area_movies'}`}>
       <h3 className='footer__title'>{footerText.title}</h3>
       <div className='footer__bottom'>
         <span className='footer__copyright'>&#169; {footerText.copyright}</span>
