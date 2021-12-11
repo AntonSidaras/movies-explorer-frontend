@@ -13,7 +13,6 @@
   padding: 0;
   width: 89.1%;
   max-width: 1280px;
-  min-width: 300px;
   height: 74px;
 }
 
@@ -72,5 +71,15 @@
 @media screen and (max-width: 800px) {
   .header__container{
     width: 92.18%;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .header__container{
+    width: 91.25%;
+  }
+  .header__container_width_full{
+    margin: auto;
+    justify-content: center;
   }
 }

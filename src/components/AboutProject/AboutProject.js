@@ -8,10 +8,10 @@ function AboutProjects() {
     <section className='about-project'>
       <h2 className='about-project__title'>{aboutProjectText.title}</h2>
       <article className='about-project__info'>
-        <p className='about-project__subtitle'>{aboutProjectText.subtitle.stages}</p>
-        <p className='about-project__subtitle'>{aboutProjectText.subtitle.duration}</p>
-        <p className='about-project__text'>{aboutProjectText.text.plan}</p>
-        <p className='about-project__text'>{aboutProjectText.text.deadline}</p>
+        <p className='about-project__subtitle about-project__subtitle_type_stages'>{aboutProjectText.subtitle.stages}</p>
+        <p className='about-project__subtitle about-project__subtitle_type_time'>{aboutProjectText.subtitle.duration}</p>
+        <p className='about-project__text about-project__text_type_stages'>{aboutProjectText.text.plan}</p>
+        <p className='about-project__text about-project__text_type_time'>{aboutProjectText.text.deadline}</p>
       </article>
       <div className='about-project__progress'>
         <div className='about-project__one-week'>

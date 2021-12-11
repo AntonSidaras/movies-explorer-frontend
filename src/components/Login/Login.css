@@ -172,3 +172,39 @@
     margin-top: 162px;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .login{
+    margin-top: 38px;
+  }
+  .login__title{
+    margin: auto;
+  }
+  .login__section{
+    margin-top: 30px;
+  }
+  .login__fieldset{
+    margin-top: 42px;
+  }
+  .login__form{
+    width: 260px;
+  }
+  .login__input{
+    width: 260px;
+  }
+  .login__sign-in-button{
+    margin: 245px 0 0 0;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .login__text{
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .login__sign-up-link{
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

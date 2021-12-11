@@ -168,3 +168,39 @@
     margin-top: 162px;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .register{
+    margin-top: 38px;
+  }
+  .register__title{
+    margin: auto;
+  }
+  .register__section{
+    margin-top: 30px;
+  }
+  .register__fieldset{
+    margin-top: 42px;
+  }
+  .register__form{
+    width: 260px;
+  }
+  .register__input{
+    width: 260px;
+  }
+  .register__sign-up-button{
+    margin: 157px 0 0 0;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .register__text{
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .register__sign-in-link{
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

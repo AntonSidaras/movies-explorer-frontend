@@ -81,3 +81,16 @@
     line-height: 39px;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .promo__container{
+    width: 93.75%;
+  }
+  .promo__title{
+    font-weight: 400;
+    margin: 183px auto 340px auto;
+  }
+  .promo__curve{
+    bottom: 40px;
+  }
+}

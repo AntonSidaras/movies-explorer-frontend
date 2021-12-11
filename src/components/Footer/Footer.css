@@ -7,7 +7,6 @@
   padding: 0;
   width: 89.1%;
   max-width: 1280px;
-  min-width: 320px;
 }
 
 .footer_area_movies{
@@ -82,5 +81,42 @@
   .footer{
     width: 92.2%;
     margin: 150px auto 0 auto;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .footer{
+    width: 93.75%;
+    margin: 128px auto 0 auto;
+  }
+  .footer__title{
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .footer__bottom{
+    padding: 26px 0 20px 0;
+    flex-direction: column;
+  }
+  .footer__link{
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .footer__list{
+    width: initial;
+    margin: 0 auto 30px auto;
+    order: 1;
+    flex-direction: column;
+  }
+  .footer__item{
+    margin: 0 auto 10px auto;
+  }
+  .footer__item:last-of-type{
+    margin: auto;
+  }
+  .footer__copyright{
+    margin: auto;
+    font-size: 12px;
+    line-height: 15px;
+    order: 2;
   }
 }

@@ -7,7 +7,6 @@
   padding: 0;
   width: 89.1%;
   max-width: 1280px;
-  min-width: 320px;
 }
 
 .about-me__title{
@@ -25,7 +24,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0;
   padding: 0;
   margin: 66px 0 0 0;
 }
@@ -34,6 +32,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  order: 1;
 }
 
 .about-me__name{
@@ -77,6 +76,7 @@
 .about-me__image-container{
   width: 270px;
   height: 327px;
+  order: 2;
 }
 
 .about-me__image{
@@ -157,5 +157,47 @@
   .about-me__image-container{
     width: 255px;
     height: 307px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .about-me{
+    width: 91.25%;
+  }
+  .about-me__title{
+    margin: 38px 0 0 0;
+    padding: 0 0 27px 0;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .about-me__info{
+    flex-direction: column;
+    margin: 61px auto 0 auto;
+  }
+  .about-me__about{
+    margin-top: 40px;
+    order: 2;
+  }
+  .about-me__image-container{
+    margin: auto;
+    width: 292px;
+    height: 352px;
+    order: 1;
+  }
+  .about-me__name{
+    margin-bottom: 20px;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .about-me__profession{
+    margin-bottom: 20px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-me__description{
+    font-size: 11px;
+    line-height: 16px;
   }
 }

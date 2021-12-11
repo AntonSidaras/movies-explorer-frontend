@@ -161,7 +161,7 @@ const registerText = {
     email: 'E-mail',
     password: 'Пароль'
   },
-  errorText: 'Что-то пошло не так',
+  errorText: 'Что-то пошло не так...',
   buttonText: 'Зарегистрироваться',
   text: 'Уже зарегистрированы?',
   singInText: 'Войти'
