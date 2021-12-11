@@ -5,7 +5,6 @@
   padding: 0;
   width: 89.1%;
   max-width: 1280px;
-  min-width: 320px;
 }
 
 .movies-card-list__container{
@@ -23,7 +22,6 @@
   width: 100%;
   height: 36px;
   max-width: 1280px;
-  min-width: 320px;
   border: none;
   border-radius: 6px;
   outline: none;
@@ -66,5 +64,16 @@
   }
   .movies-card-list__button-more{
     margin: 85px auto 6px auto;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .movies-card-list{
+    margin: 87px auto 0 auto;
+    width: 93.75%;
+  }
+  .movies-card-list__container{
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
   }
 }

@@ -170,12 +170,14 @@
 @media screen and (max-width: 800px) {
   .login{
     margin-top: 162px;
+    margin-bottom: 162px;
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 500px) {
   .login{
     margin-top: 38px;
+    margin-bottom: 30px;
   }
   .login__title{
     margin: auto;

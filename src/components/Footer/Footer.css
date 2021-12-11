@@ -120,3 +120,9 @@
     order: 2;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .footer{
+    margin: 153px auto 0 auto;
+  }
+}

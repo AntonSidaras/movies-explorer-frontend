@@ -78,6 +78,9 @@
   .header__container{
     width: 91.25%;
   }
+}
+
+@media screen and (max-width: 500px) {
   .header__container_width_full{
     margin: auto;
     justify-content: center;

@@ -20,3 +20,10 @@
     display: block;
   }
 }
+
+@media screen and (max-width: 500px) {
+  .extra-button{
+    background-position: right;
+    background-image: url('../../images/header/extra_small.svg');
+  }
+}

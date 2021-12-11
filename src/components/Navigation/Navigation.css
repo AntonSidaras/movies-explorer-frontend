@@ -123,3 +123,9 @@
   cursor: pointer;
   opacity: 0.6;
 }
+
+@media screen and (max-width: 520px) {
+  .navigation__container{
+    width: 100%;
+  }
+}
