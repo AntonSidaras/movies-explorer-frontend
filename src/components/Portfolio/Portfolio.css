@@ -1,0 +1,125 @@
+.portfolio{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 100px auto 0 auto;
+  padding: 0;
+  width: 89.1%;
+  max-width: 1280px;
+}
+
+.portfolio__title{
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  color: #8B8B8B;
+  mix-blend-mode: normal;
+}
+
+.portfolio__list{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 50px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portfolio__item{
+  margin: 0 0 20px 0;
+  padding: 0;
+  border-bottom: 1px #424242 solid;
+}
+
+.portfolio__item:last-child{
+  margin: 0;
+  border-bottom: none;
+}
+
+.portfolio__link{
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 0 20px 0;
+  padding: 0;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio__link:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.portfolio__link_type_last{
+  border: none
+}
+
+.portfolio__text{
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 30px;
+  line-height: 50px;  
+  letter-spacing: -0.04em;
+  color: #FFF;
+}
+
+.portfolio__arrow{
+  display: block;
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 7px 7px 0 0;
+  background-image: url('../../images/portfolio/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@media screen and (max-width: 800px) {
+  .portfolio{
+    margin: 90px auto 0 auto;
+    width: 86.98%;
+  }
+  .portfolio__text{
+    font-size: 28px;
+  }
+  .portfolio__item{
+    border-bottom: 1px #E5E5E5 solid;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .portfolio{
+    margin: 35px auto 0 auto;
+    width: 91.25%;
+  }
+  .portfolio__title{
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .portfolio__list{
+    margin: 40px 0 0 0;
+  }
+  .portfolio__text{
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .portfolio__arrow{
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background-image: url('../../images/portfolio/arrow_small.svg');
+  }
+}

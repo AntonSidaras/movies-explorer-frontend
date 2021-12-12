@@ -1,0 +1,113 @@
+.info-tooltip{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: all 0.3s ease-in;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.info-tooltip_opened{
+  visibility: visible;
+  opacity: 1;
+}
+
+.info-tooltip__container{
+  width: 430px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+}
+@media screen and (max-width: 645px) {
+  .info-tooltip__container{
+    margin: 0 auto;
+    width: 282px;
+  }
+}
+
+.info-tooltip__reply-icon{
+  margin: 60px auto 0 auto;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+
+.info-tooltip__title{
+  margin: 32px auto 60px auto;
+  display: block;
+  max-width: 358px;
+  min-width: 244px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: black;
+}
+
+.info-tooltip__reply-text{
+  justify-self: left;
+  align-self: flex-start;
+  margin: 30px auto 0 30px;
+  display: block;
+  max-width: 358px;
+  min-width: 244px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 17px;
+  text-align: justify;
+  color: black;
+}
+
+.info-tooltip__reply-text:nth-of-type(1){
+  margin-top: 0;
+}
+
+.info-tooltip__reply-text:last-of-type{
+  margin-bottom: 30px;
+}
+
+.info-tooltip__close-button{
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../images/infotooltip/close.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -40px;
+  right: -40px;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+.info-tooltip__close-button:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+@media screen and (max-width: 645px) {
+  .info-tooltip__close-button{
+    width: 18px;
+    height: 18px;
+    right: 10px;
+    background-image: url(../../images/infotooltip/close-small.svg);
+  }
+}

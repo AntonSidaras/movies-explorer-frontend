@@ -1,0 +1,18 @@
+.account-button{
+  width: 100px;
+  height: 30px;
+  background-image: url('../../images/header/profileLogo.svg');
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.account-button:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 1024px) {
+  .account-button{
+    display: none;
+  }
+}

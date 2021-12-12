@@ -1,0 +1,123 @@
+.search-form{
+  display: flex;
+  box-sizing: border-box;
+  margin: 70px auto 0 auto;
+  padding: 0;
+  width: 89.1%;
+  max-width: 1280px;
+}
+
+.search-form__form{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.search-form__container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #424242;
+}
+
+.search-form__input{
+  width: 80%;
+  margin: 0;
+  padding: 0 0 13px 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #8B8B8B;
+}
+
+.search-form__button{
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: url('../../images/searchform/find.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 34px;
+  height: 34px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.search-form__button:hover{
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.search-form__filter{
+  display: flex;
+  margin: 33px 0 0 0;
+  padding: 0;
+}
+
+.search-form__span{
+  margin: 0 0 0 14px;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  color: #fff;
+  order: 2;
+}
+
+.search-form__filter{
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 1024px) {
+  .search-form{
+    width: 92.18%;
+    margin: 80px auto 0 auto;
+  }
+  .search-form__span{
+    margin: 0 16px 0 0;
+    order: 1;
+  }
+  .search-form__filter{
+    margin: 31px 0 0 0;
+    justify-content: end;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .search-form{
+    margin: 83px auto 0 auto;
+  }
+  .search-form__container{
+    padding: 0 0 11px 0;
+  }
+  .search-form__input{
+    font-size: 18px;
+    line-height: 22px;
+    padding: 0;
+  }
+  .search-form__filter{
+    margin: 38px 0 0 0;
+    justify-content: center;
+  }
+  .search-form__span{
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 18px;
+  }
+}
