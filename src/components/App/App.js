@@ -137,16 +137,22 @@ function App() {
               exact path={appRoutes.profile}
               element={
                 <Profile
+                  onSignOut={handleSignOut}
                   onDisplayInfoTooltip={handleDisplayInfoTooltip}
                 />}
             />
             <Route
               exact path={appRoutes.auth.signIn}
-              element={<Login />}
+              element={
+                <Login
+                  onSignIn={handleSignIn}
+                  onDisplayInfoTooltip={handleDisplayInfoTooltip}
+                />}
             />
             <Route exact path={appRoutes.auth.signUp}
               element={
                 <Register
+                  onSignUp={handleSignUp}
                   onDisplayInfoTooltip={handleDisplayInfoTooltip}
                 />}
             />
