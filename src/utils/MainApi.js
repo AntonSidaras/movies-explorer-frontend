@@ -1,28 +1,28 @@
-class Auth {
+class MainApi {
   constructor({ server, handleResponse }) {
     this._server = server;
     this._handleResponse = handleResponse;
-    this._signIn = "/signin"; //вход
     this._signUp = "/signup"; //регистрация
+    this._signIn = "/signin"; //вход
     this._usersMe = "/users/me";
     this._contentType = "application/json";
   }
 
-  signUp({ email, password }) {
-    return fetch(this._server + this._signUp, {
+  signUp({ name, email, password }) {
+    return fetch(`${this._server}${this._signUp}`, {
       method: "POST",
       headers: {
         "Content-Type": this._contentType
       },
       body: JSON.stringify({
-        "password": password,
-        "email": email
+        'name': name,
+        'email': email,
+        'password': password,
       })
-    })
-      .then(this._handleResponse);
+    }).then(this._handleResponse);
   }
 
-  signIn({ email, password }) {
+  /*signIn({ email, password }) {
     return fetch(this._server + this._signIn, {
       method: "POST",
       headers: {
@@ -34,10 +34,14 @@ class Auth {
       })
     })
       .then(this._handleResponse);
-  }
+}*/
+
+  /*signOut(){
+  
+  }*/
 
   checkUser(jwt) {
-    return fetch(this._server + this._usersMe, {
+    return fetch(`${this._server}${this._usersMe}`, {
       method: "GET",
       headers: {
         "Content-Type": this._contentType,
@@ -49,8 +53,8 @@ class Auth {
 
 }
 
-export default new Auth({
-  server: "https://api.asidaras.movies.nomoredomains.club", handleResponse: (res) => {
+export default new MainApi({
+  server: 'https://api.asidaras.movies.nomoredomains.club', handleResponse: (res) => {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }

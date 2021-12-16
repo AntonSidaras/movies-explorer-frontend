@@ -10,7 +10,7 @@ function MoviesCardList({ moviesCards, isSaved }) {
       <div className='movies-card-list__container'>
         {moviesCards.map((item) => (
           <MoviesCard
-            key={item._id}
+            key={item.id}
             movieCard={item}
             isSaved={isSaved}
           />

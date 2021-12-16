@@ -9,9 +9,19 @@ import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import Loader from '../Loader/Loader';
-import { areas, appRoutes, appInitValues, defaultLoginTooltipData } from "../../utils/constants";
-import BeatFilm from '../../utils/MoviesApi';
-import movieCards from "../../utils/movieCards";
+import {
+  areas,
+  appRoutes,
+  appInitValues,
+  defaultLoginTooltipData,
+  localStorageKeys
+} from "../../utils/constants";
+import {
+  isKeyExistInLocalStorage
+} from "../../utils/utils";
+import MainApi from "../../utils/MainApi";
+import onSuccessAuth from '../../images/infotooltip/ok.svg';
+import onFailureAuth from '../../images/infotooltip/fail.svg';
 import './App.css';
 
 function App() {
@@ -21,19 +31,15 @@ function App() {
   const [loginTooltipData, setloginTooltipData] = React.useState(defaultLoginTooltipData);
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
   const [isLoaderOpen, setIsLoaderOpen] = React.useState(false);
-  const [moviesCards, setMoviesCards] = React.useState(movieCards);
-  const [savedMoviesCards, setSavedMoviesCard] = React.useState([]);
+  const [moviesCards, setMoviesCards] = React.useState([]);
 
   React.useEffect(() => {
-    BeatFilm.getMovies()
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setCurrentUser(appInitValues.user);
+
+    if (isKeyExistInLocalStorage(localStorageKeys.moviesCards)) {
+      setMoviesCards(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
+    }
     setIsLoaderOpen(false);
+
   }, []);
 
   /*
@@ -46,6 +52,16 @@ function App() {
 
   function handleSignUp({ name, email, password }) {
     console.log(name, email, password);
+    MainApi.signUp({ name, email, password })
+      .then((data) => {
+        setCurrentUser(data);
+        setIsLoggedIn(true);
+        handleDisplayInfoTooltip({ title: 'Вы успешно зарегистрировались!', texts: [], image: onSuccessAuth });
+      })
+      .catch((error) => {
+        handleDisplayInfoTooltip({ title: 'Ошибка', texts: [], image: onFailureAuth });
+        console.error(error);
+      });
   }
 
   function handleSignOut() {
@@ -66,7 +82,7 @@ function App() {
 
   /*
     Управление 
-  */
+  *//*
   function handleDeleteMovieCard(movieCard) {
     setMoviesCards((state) => state.filter(card => card._id !== movieCard._id));
     setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
@@ -101,7 +117,7 @@ function App() {
       setMoviesCards((state) => state.map((card) => card._id === movieCard._id ? result : card));
       setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
     }
-  }
+  }*/
 
   /*
     Вёрстка компонента
@@ -120,7 +136,7 @@ function App() {
               element={
                 <Movies
                   area={areas.areaMovies}
-                  moviesCards={movieCards}
+                  moviesCards={moviesCards}
                   isSaved={false}
                 />}
             />
@@ -129,7 +145,7 @@ function App() {
               element={
                 <Movies
                   area={areas.areaSavedMovies}
-                  moviesCards={movieCards}
+                  moviesCards={moviesCards}
                   isSaved={true}
                 />}
             />

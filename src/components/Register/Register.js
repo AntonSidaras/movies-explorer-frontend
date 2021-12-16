@@ -1,15 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
 import Header from '../Header/Header';
 import { appRoutes, areas, registerText } from '../../utils/constants';
-import onSuccessAuth from '../../images/infotooltip/ok.svg';
-import onFailureAuth from '../../images/infotooltip/fail.svg';
 import './Register.css';
 
-function Register({ onSignUp, onDisplayInfoTooltip }) {
+function Register({ onSignUp }) {
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const nameRef = React.useRef();
   const emailRef = React.useRef();
@@ -75,12 +72,9 @@ function Register({ onSignUp, onDisplayInfoTooltip }) {
     });
 
     if (isValidCredentials) {
-      onDisplayInfoTooltip({ title: 'Вы успешно зарегистрировались!', texts: [], image: onSuccessAuth });
       setIsSignUpError(false);
-      navigate(appRoutes.content.movies);
     }
     else {
-      onDisplayInfoTooltip({ title: 'Ошибка', texts: [], image: onFailureAuth });
       setIsSignUpError(true);
     }
   }

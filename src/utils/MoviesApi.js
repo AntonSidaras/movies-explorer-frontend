@@ -1,11 +1,13 @@
+import { moviesServerRoot } from "./constants";
 class BeatFilm {
   constructor({ server, handleResponse }) {
     this._server = server;
     this._handleResponse = handleResponse;
+    this._getEndPoint = '/beatfilm-movies';
   }
 
   getMovies() {
-    return fetch(this._server + '/beatfilm-movies', {
+    return fetch(`${this._server}${this._getEndPoint}`, {
       method: 'GET'
     })
       .then(this._handleResponse);
@@ -13,10 +15,20 @@ class BeatFilm {
 }
 
 export default new BeatFilm({
-  server: 'https://api.nomoreparties.co', handleResponse: (res) => {
+  server: moviesServerRoot, handleResponse: (res) => {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
     return res.json();
   }
 });
+
+/*BeatFilm.getMovies()
+      .then((result) => {
+        setMoviesCards(result);
+        saveMoviesToLocalStorageAtAppMount(localStorageKeys.moviesCards, result, 12);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });*/

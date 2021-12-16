@@ -3,6 +3,8 @@ const toSocial = {
   git: 'https://github.com/AntonSidaras'
 }
 
+const moviesServerRoot = 'https://api.nomoreparties.co';
+
 const appRoutes = {
   root: '/',
   content: {
@@ -27,9 +29,9 @@ const areas = {
 
 const appInitValues = {
   user: {
-    name: "Антон",
-    email: 'a.sidaras@yandex.ru',
-    _id: '1234567890123456789'
+    id: '',
+    name: '',
+    email: '',
   }
 }
 
@@ -96,6 +98,11 @@ const headerText = {
   alt: 'Логотип проекта Movies Explorer'
 }
 
+const localStorageKeys = {
+  moviesCards: 'moviesCards',
+  jwt: 'jwt'
+}
+
 const loginText = {
   title: 'Рады видеть!',
   captions: {
@@ -121,6 +128,8 @@ const notFoundText = {
   text: 'Страница не найдена',
   backLink: 'Назад'
 }
+
+const moviesCardAlt = 'Постер фильма';
 
 const moviesCardListText = {
   buttonMoreText: 'Ещё'
@@ -194,6 +203,7 @@ const defaultLoginTooltipData = {
 }
 
 export {
+  moviesServerRoot,
   appRoutes,
   areas,
   appInitValues,
@@ -202,9 +212,11 @@ export {
   authButtonsText,
   headerText,
   footerText,
+  localStorageKeys,
   loginText,
   navText,
   notFoundText,
+  moviesCardAlt,
   moviesCardListText,
   portfolioText,
   profileText,
