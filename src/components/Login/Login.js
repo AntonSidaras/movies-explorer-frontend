@@ -1,14 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
 import Header from '../Header/Header';
 import { appRoutes, areas, loginText } from '../../utils/constants';
-import onFailureAuth from '../../images/infotooltip/fail.svg';
 import './Login.css';
 
-function Login({ onSignIn, onDisplayInfoTooltip }) {
-
-  const navigate = useNavigate();
+function Login({ onSignIn }) {
 
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
@@ -58,10 +54,9 @@ function Login({ onSignIn, onDisplayInfoTooltip }) {
 
     if (isValidCredentials) {
       setIsSignInError(false);
-      navigate(appRoutes.content.movies);
+      //navigate(appRoutes.content.movies);
     }
     else {
-      onDisplayInfoTooltip({ title: 'Ошибка', texts: [], image: onFailureAuth });
       setIsSignInError(true);
     }
   }

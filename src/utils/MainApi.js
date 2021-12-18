@@ -4,7 +4,7 @@ class MainApi {
     this._handleResponse = handleResponse;
     this._signUp = "/signup"; //регистрация
     this._signIn = "/signin"; //вход
-    this._usersMe = "/users/me";
+    this._usersMe = "/users/me"; //данные об авторизованном пользователе
     this._contentType = "application/json";
   }
 
@@ -22,25 +22,30 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  /*signIn({ email, password }) {
+  signIn({ email, password }) {
     return fetch(this._server + this._signIn, {
       method: "POST",
       headers: {
         "Content-Type": this._contentType
       },
       body: JSON.stringify({
-        "password": password,
-        "email": email
+        'email': email,
+        'password': password,
       })
-    })
-      .then(this._handleResponse);
-}*/
+    }).then(this._handleResponse);
+  }
 
-  /*signOut(){
-  
-  }*/
+  signOut() {
+    return fetch(this._server + this._signIn, {
+      method: "POST",
+      headers: {
+        "Content-Type": this._contentType
+      },
+      body: JSON.stringify({})
+    }).then(this._handleResponse);
+  }
 
-  checkUser(jwt) {
+  getUserInfo(jwt) {
     return fetch(`${this._server}${this._usersMe}`, {
       method: "GET",
       headers: {
@@ -56,7 +61,7 @@ class MainApi {
 export default new MainApi({
   server: 'https://api.asidaras.movies.nomoredomains.club', handleResponse: (res) => {
     if (!res.ok) {
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject(res);
     }
     return res.json();
   }

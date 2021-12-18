@@ -30,8 +30,8 @@ const areas = {
 const appInitValues = {
   user: {
     id: '',
-    name: '',
     email: '',
+    name: ''
   }
 }
 

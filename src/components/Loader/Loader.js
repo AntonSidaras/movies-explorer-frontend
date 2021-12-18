@@ -1,9 +1,9 @@
 import React from 'react'
 import './Loader.css'
 
-function Loader({ isOpen }) {
+function Loader({ isOpened }) {
   return (
-    <section className={`loader ${isOpen ? 'loader_opened' : ''}`}>
+    <section className={`loader ${isOpened ? 'loader_opened' : ''}`}>
       <div className='loader__container'>
         <div className='loader__child'></div>
         <div className='loader__child'></div>

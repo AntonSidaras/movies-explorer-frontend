@@ -26,58 +26,164 @@ import './App.css';
 
 function App() {
 
+  const [jwt, setJWT] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState(appInitValues.user);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [loginTooltipData, setloginTooltipData] = React.useState(defaultLoginTooltipData);
-  const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
-  const [isLoaderOpen, setIsLoaderOpen] = React.useState(false);
+  const [infoTooltipData, setInfoTooltipData] = React.useState(defaultLoginTooltipData);
+  const [isInfoTooltipOpened, setInfoTooltipOpened] = React.useState(false);
+  const [isLoaderOpened, setIsLoaderOpened] = React.useState(false);
   const [moviesCards, setMoviesCards] = React.useState([]);
+
+  const setUserInfoAndJWT = React.useCallback((initStage) => {
+    MainApi.getUserInfo(jwt)
+      .then((user) => {
+        onSignIn({ user, jwt });
+      })
+      .catch((error) => {
+        try {
+          error.json()
+            .then((err) => initStage ? console.error(error) : handleDisplayInfoTooltip({
+              title: `Ошибка проверки пользователя: ${error.status} [${error.statusText}]`,
+              texts: [err.message],
+              image: onFailureAuth
+            }))
+            .catch((exeption) => console.error(exeption));
+        } catch {
+          initStage ? console.error(error) : handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureAuth
+          })
+        }
+      });
+  }, [jwt]);
 
   React.useEffect(() => {
 
     if (isKeyExistInLocalStorage(localStorageKeys.moviesCards)) {
       setMoviesCards(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
     }
-    setIsLoaderOpen(false);
 
-  }, []);
+    setJWT(localStorage.getItem(localStorageKeys.jwt));
+
+    if (jwt) {
+      setUserInfoAndJWT(true);
+    }
+    setIsLoaderOpened(false);
+
+  }, [setUserInfoAndJWT, jwt]);
 
   /*
     Аутентификация пользователя
   */
+
   function handleSignIn({ email, password }) {
-    console.log(email, password);
-    setIsLoggedIn(true);
+    MainApi.signIn({ email, password })
+      .then((response) => {
+        setJWT(response.token);
+        setUserInfoAndJWT(false);
+      })
+      .catch((error) => {
+        try {
+          error.json()
+            .then((err) => handleDisplayInfoTooltip({
+              title: `Ошибка входа: ${error.status} [${error.statusText}]`,
+              texts: [err.message],
+              image: onFailureAuth
+            }))
+            .catch((exeption) => console.error(exeption));
+        } catch {
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureAuth
+          })
+        }
+      });
   }
 
   function handleSignUp({ name, email, password }) {
-    console.log(name, email, password);
     MainApi.signUp({ name, email, password })
-      .then((data) => {
-        setCurrentUser(data);
-        setIsLoggedIn(true);
-        handleDisplayInfoTooltip({ title: 'Вы успешно зарегистрировались!', texts: [], image: onSuccessAuth });
+      .then(() => {
+        handleDisplayInfoTooltip({
+          title: 'Вы успешно зарегистрировались!',
+          texts: [],
+          image: onSuccessAuth
+        });
+        handleSignIn({ email, password });
       })
       .catch((error) => {
-        handleDisplayInfoTooltip({ title: 'Ошибка', texts: [], image: onFailureAuth });
-        console.error(error);
+        try {
+          error.json()
+            .then((err) => handleDisplayInfoTooltip({
+              title: `Ошибка регистрации: ${error.status} [${error.statusText}]`,
+              texts: [err.message],
+              image: onFailureAuth
+            }))
+            .catch((exeption) => console.error(exeption));
+        } catch {
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureAuth
+          })
+        }
       });
   }
 
   function handleSignOut() {
+    MainApi.signOut()
+      .then(() => {
+        onSignOut();
+        handleDisplayInfoTooltip({
+          title: 'Вы вышли из аккаунта',
+          texts: [],
+          image: onSuccessAuth
+        });
+      })
+      .catch((error) => {
+        try {
+          error.json()
+            .then((err) => handleDisplayInfoTooltip({
+              title: `Ошибка выхода: ${error.status} [${error.statusText}]`,
+              texts: [err.message],
+              image: onFailureAuth
+            }))
+            .catch((exeption) => console.error(exeption));
+        } catch {
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureAuth
+          })
+        }
+      });
+  }
+
+  function onSignIn({ user, jwt }) {
+    setIsLoggedIn(true);
+    localStorage.setItem(localStorageKeys.jwt, jwt);
+    setJWT(jwt);
+    setCurrentUser(user);
+  }
+
+  function onSignOut() {
     setIsLoggedIn(false);
+    localStorage.removeItem(localStorageKeys.jwt);
+    setJWT(null);
+    setCurrentUser(appInitValues.user);
   }
 
   /*
     Управление открытием модального окна
    */
   function toggleOpenInfoTooltip() {
-    isInfoTooltipOpen ? setInfoTooltipOpen(false) : setInfoTooltipOpen(true);
+    isInfoTooltipOpened ? setInfoTooltipOpened(false) : setInfoTooltipOpened(true);
   }
 
   function handleDisplayInfoTooltip({ title, texts, image }) {
-    toggleOpenInfoTooltip();
-    setloginTooltipData({ title, texts, image });
+    setInfoTooltipOpened(true);
+    setInfoTooltipData({ title, texts, image });
   }
 
   /*
@@ -162,14 +268,12 @@ function App() {
               element={
                 <Login
                   onSignIn={handleSignIn}
-                  onDisplayInfoTooltip={handleDisplayInfoTooltip}
                 />}
             />
             <Route exact path={appRoutes.auth.signUp}
               element={
                 <Register
                   onSignUp={handleSignUp}
-                  onDisplayInfoTooltip={handleDisplayInfoTooltip}
                 />}
             />
             <Route
@@ -178,12 +282,12 @@ function App() {
             />
           </Routes>
           <InfoTooltip
-            isOpen={isInfoTooltipOpen}
-            data={loginTooltipData}
+            isOpened={isInfoTooltipOpened}
+            data={infoTooltipData}
             onClose={toggleOpenInfoTooltip}
           />
           <Loader
-            isOpen={isLoaderOpen}
+            isOpened={isLoaderOpened}
           />
         </div>
       </Router>

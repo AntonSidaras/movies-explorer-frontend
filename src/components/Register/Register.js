@@ -6,8 +6,6 @@ import './Register.css';
 
 function Register({ onSignUp }) {
 
-  //const navigate = useNavigate();
-
   const nameRef = React.useRef();
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
@@ -21,17 +19,14 @@ function Register({ onSignUp }) {
   const [isValidPassword, setIsValidPassword] = React.useState(false);
 
   const [isSignUpError, setIsSignUpError] = React.useState(false);
-  const [isValidCredentials, setIsValidCredentials] = React.useState(false);
 
   function checkValidName() {
     if (!nameRef.current.validity.valid) {
       setNameErrorText(nameRef.current.validationMessage);
       setIsValidName(false);
-      setIsValidCredentials(false);
     }
     else {
-      setIsValidName(true);
-      setIsValidCredentials(isValidName && isValidEmail && isValidPassword);
+      setIsValidName(true);;
       setNameErrorText('');
     }
   }
@@ -39,12 +34,10 @@ function Register({ onSignUp }) {
   function checkValidEmail() {
     if (!emailRef.current.validity.valid) {
       setEmailErrorText(emailRef.current.validationMessage);
-      setIsValidEmail(false);
-      setIsValidCredentials(false);
+      setIsValidEmail(false);;
     }
     else {
-      setIsValidEmail(true);
-      setIsValidCredentials(isValidName && isValidEmail && isValidPassword);
+      setIsValidEmail(true);;
       setEmailErrorText('');
     }
   }
@@ -53,11 +46,9 @@ function Register({ onSignUp }) {
     if (!passwordRef.current.validity.valid) {
       setPasswordErrorText(passwordRef.current.validationMessage);
       setIsValidPassword(false);
-      setIsValidCredentials(false);
     }
     else {
-      setIsValidPassword(true);
-      setIsValidCredentials(isValidName && isValidEmail && isValidPassword);
+      setIsValidPassword(true);;
       setPasswordErrorText('');
     }
   }
@@ -71,7 +62,7 @@ function Register({ onSignUp }) {
       password: passwordRef.current.value
     });
 
-    if (isValidCredentials) {
+    if (isValidName && isValidEmail && isValidPassword) {
       setIsSignUpError(false);
     }
     else {
@@ -132,9 +123,9 @@ function Register({ onSignUp }) {
             className={`register__error register__error_type_last ${isSignUpError ? 'register__error_type_visible' : ''}`}
           >{registerText.errorText}</span>
           <button
-            className={`register__sign-up-button ${!isValidCredentials ? 'register__sign-up-button_type_disabled' : ''}`}
+            className={`register__sign-up-button ${!(isValidName && isValidEmail && isValidPassword) ? 'register__sign-up-button_type_disabled' : ''}`}
             type='submit'
-            disabled={!isValidCredentials}
+            disabled={!(isValidName && isValidEmail && isValidPassword)}
           >{registerText.buttonText}</button>
         </form>
         <div className='register__bottom'>

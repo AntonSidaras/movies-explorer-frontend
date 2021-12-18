@@ -61,18 +61,18 @@
 }
 
 .info-tooltip__reply-text{
-  justify-self: left;
-  align-self: flex-start;
-  margin: 30px auto 0 30px;
+  justify-self: center;
+  align-self: center;
+  margin: 30px auto 0 auto;
   display: block;
   max-width: 358px;
   min-width: 244px;
   font-style: normal;
-  font-weight: 900;
-  font-size: 15px;
-  line-height: 17px;
-  text-align: justify;
-  color: black;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 15px;
+  text-align: center;
+  color: #f00;
 }
 
 .info-tooltip__reply-text:nth-of-type(1){
