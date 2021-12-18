@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import NavTab from '../NavTab/NavTab';
 import AuthButtons from '../AuthButtons/AuthButtons';
 import AccountButton from '../AccountButton/AccountButton';
@@ -8,7 +9,10 @@ import projectLogo from '../../images/header/projectLogo.svg';
 import { appRoutes, areas, headerText } from '../../utils/constants';
 import './Header.css';
 
-function Header({ area, isLoggedIn }) {
+function Header({ area }) {
+
+  const user = React.useContext(CurrentUserContext);
+  const isLoggedIn = user.isLoggedIn;
 
   const isAreaMain = area === areas.areaMain;
   const isAreaAuth = area === areas.areaAuth;

@@ -63,7 +63,7 @@ function Login({ onSignIn }) {
 
   return (
     <section className='login'>
-      <Header area={areas.areaAuth} isLoggedIn={false} />
+      <Header area={areas.areaAuth} />
       <div className='login__section'>
         <h2 className='login__title'>{loginText.title}</h2>
         <form className='login__form' onSubmit={handleSubmit} noValidate>

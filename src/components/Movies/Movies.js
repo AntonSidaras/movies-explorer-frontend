@@ -9,7 +9,7 @@ function Movies({ area, moviesCards, isSaved }) {
 
   return (
     <>
-      <Header area={area} isLoggedIn={true} />
+      <Header area={area} />
       <main className='movies'>
         <SearchForm />
         <MoviesCardList

@@ -4,6 +4,7 @@ const toSocial = {
 }
 
 const moviesServerRoot = 'https://api.nomoreparties.co';
+const mainApiServerRoot = 'https://api.asidaras.movies.nomoredomains.club';
 
 const appRoutes = {
   root: '/',
@@ -29,7 +30,7 @@ const areas = {
 
 const appInitValues = {
   user: {
-    id: '',
+    _id: '',
     email: '',
     name: ''
   }
@@ -204,6 +205,7 @@ const defaultLoginTooltipData = {
 
 export {
   moviesServerRoot,
+  mainApiServerRoot,
   appRoutes,
   areas,
   appInitValues,

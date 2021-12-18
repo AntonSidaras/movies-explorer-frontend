@@ -72,7 +72,7 @@ function Register({ onSignUp }) {
 
   return (
     <section className={'register'}>
-      <Header area={areas.areaAuth} isLoggedIn={false} />
+      <Header area={areas.areaAuth} />
       <div className='register__section'>
         <h2 className='register__title'>{registerText.title}</h2>
         <form className='register__form' onSubmit={handleSubmit} noValidate>

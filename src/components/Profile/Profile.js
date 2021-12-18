@@ -1,14 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Header from '../Header/Header';
-import { appRoutes, areas, profileText } from '../../utils/constants';
-import onSuccessEdit from '../../images/infotooltip/ok.svg';
+import { areas, profileText } from '../../utils/constants';
 import './Profile.css';
 
-function Profile({ onSignOut, onDisplayInfoTooltip }) {
+function Profile({ onSignOut, onUpdateUserInfo }) {
 
-  const navigate = useNavigate();
   const user = React.useContext(CurrentUserContext);
 
   const emailRef = React.useRef();
@@ -20,7 +17,13 @@ function Profile({ onSignOut, onDisplayInfoTooltip }) {
   const [isValidEmail, setIsValidEmail] = React.useState(true);
   const [isValidName, setIsValidName] = React.useState(true);
 
-  //const [isUpdateUserDataError, setUpdateUserDataError] = React.useState(false);
+  const [isUserInfoSame, setisUserInfoSame] = React.useState(true);
+
+  function checkIsUserInfoSame() {
+    const nameDiffer = user.currentUser.name === nameRef.current.value;
+    const emailDiffer = user.currentUser.email === emailRef.current.value;
+    setisUserInfoSame(nameDiffer && emailDiffer);
+  }
 
   function checkValidEmail() {
     if (!emailRef.current.validity.valid) {
@@ -31,6 +34,7 @@ function Profile({ onSignOut, onDisplayInfoTooltip }) {
       setIsValidEmail(true);
       setEmailErrorText('');
     }
+    checkIsUserInfoSame();
   }
 
   function checkValidName() {
@@ -42,27 +46,24 @@ function Profile({ onSignOut, onDisplayInfoTooltip }) {
       setIsValidName(true);
       setNameErrorText('');
     }
-  }
-
-  function checkUserDataIsDiffer() {
-    const nameDiffer = user.currentUser.name === nameRef.current.value;
-    const emailDiffer = user.currentUser.email === emailRef.current.value;
-    return nameDiffer && emailDiffer;
+    checkIsUserInfoSame();
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    onDisplayInfoTooltip({ title: 'Данные успешно изменены', texts: [], image: onSuccessEdit });
+    const name = nameRef.current.value;
+    const email = emailRef.current.value;
+    const _id = user.currentUser._id;
+    onUpdateUserInfo({ _id, email, name }, setisUserInfoSame);
   }
 
   function handleSignOut() {
     onSignOut();
-    navigate(appRoutes.root);
   }
 
   return (
     <>
-      <Header area={areas.areaProfile} isLoggedIn={true} />
+      <Header area={areas.areaProfile} />
       <section className='profile__section'>
         <h2 className='profile__title'>{profileText.title} {user.currentUser.name}</h2>
         <form className='profile__form' onSubmit={handleSubmit} noValidate>
@@ -74,8 +75,8 @@ function Profile({ onSignOut, onDisplayInfoTooltip }) {
               minLength='2'
               maxLength='30'
               required
-              ref={emailRef}
-              onChange={checkValidEmail}
+              ref={nameRef}
+              onChange={checkValidName}
             />
             <span className='profile__special-placeholder'>{profileText.placeholders.name}</span>
             <input
@@ -83,17 +84,17 @@ function Profile({ onSignOut, onDisplayInfoTooltip }) {
               defaultValue={user.currentUser.email}
               type='email'
               required
-              ref={nameRef}
-              onChange={checkValidName}
+              ref={emailRef}
+              onChange={checkValidEmail}
             />
             <span className='profile__special-placeholder'>{profileText.placeholders.email}</span>
           </fieldset>
-          <span className='profile__error'>{emailErrorText}</span>
-          <span className='profile__error profile__error_type_second'>{nameErrorText}</span>
+          <span className='profile__error'>{nameErrorText}</span>
+          <span className='profile__error profile__error_type_second'>{emailErrorText}</span>
           <button
-            className={`profile__edit-button ${!(isValidEmail && isValidName) ? 'profile__edit-button_disabled' : ''}`}
+            className={`profile__edit-button ${!(isValidEmail && isValidName) || isUserInfoSame ? 'profile__edit-button_disabled' : ''}`}
             type='submit'
-            disabled={!(isValidEmail && isValidName) || checkUserDataIsDiffer}
+            disabled={!(isValidEmail && isValidName) || isUserInfoSame}
           >{profileText.editButtonText} </button>
         </form>
         <button

@@ -20,13 +20,12 @@ import {
   isKeyExistInLocalStorage
 } from "../../utils/utils";
 import MainApi from "../../utils/MainApi";
-import onSuccessAuth from '../../images/infotooltip/ok.svg';
-import onFailureAuth from '../../images/infotooltip/fail.svg';
+import onSuccessResponse from '../../images/infotooltip/ok.svg';
+import onFailureResponse from '../../images/infotooltip/fail.svg';
 import './App.css';
 
 function App() {
 
-  const [jwt, setJWT] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState(appInitValues.user);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [infoTooltipData, setInfoTooltipData] = React.useState(defaultLoginTooltipData);
@@ -34,29 +33,64 @@ function App() {
   const [isLoaderOpened, setIsLoaderOpened] = React.useState(false);
   const [moviesCards, setMoviesCards] = React.useState([]);
 
-  const setUserInfoAndJWT = React.useCallback((initStage) => {
+  /*
+    API Responses
+  */
+
+  const displayResponseSuccess = (text) => {
+    handleDisplayInfoTooltip({
+      title: text,
+      texts: [],
+      image: onSuccessResponse
+    });
+  }
+
+  const displayResponseError = (text, error) => {
+    error.json()
+      .then((err) => handleDisplayInfoTooltip({
+        title: `${text} ${error.status} [${error.statusText}]`,
+        texts: [err.message],
+        image: onFailureResponse
+      }))
+      .catch((exeption) => console.error(exeption));
+  }
+
+  const displayUnknownError = React.useCallback(() => {
+    handleDisplayInfoTooltip({
+      title: 'Неизвестная ошибка',
+      texts: [],
+      image: onFailureResponse
+    })
+  }, []);
+
+  /*
+    setUserInfoAndJWT
+  */
+
+  const setUserInfoAndJWT = React.useCallback((jwt, initStage) => {
     MainApi.getUserInfo(jwt)
       .then((user) => {
         onSignIn({ user, jwt });
       })
       .catch((error) => {
+        localStorage.removeItem(localStorageKeys.jwt);
         try {
           error.json()
-            .then((err) => initStage ? console.error(error) : handleDisplayInfoTooltip({
+            .then((err) => initStage && error.status === 401 ? console.error(error) : handleDisplayInfoTooltip({
               title: `Ошибка проверки пользователя: ${error.status} [${error.statusText}]`,
               texts: [err.message],
-              image: onFailureAuth
+              image: onFailureResponse
             }))
             .catch((exeption) => console.error(exeption));
         } catch {
-          initStage ? console.error(error) : handleDisplayInfoTooltip({
-            title: 'Неизвестная ошибка',
-            texts: [],
-            image: onFailureAuth
-          })
+          initStage ? console.error(error) : displayUnknownError();
         }
       });
-  }, [jwt]);
+  }, [displayUnknownError]);
+
+  /*
+    Монтирование компонента 
+  */
 
   React.useEffect(() => {
 
@@ -64,124 +98,105 @@ function App() {
       setMoviesCards(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
     }
 
-    setJWT(localStorage.getItem(localStorageKeys.jwt));
+    const jwt = localStorage.getItem(localStorageKeys.jwt);
 
     if (jwt) {
-      setUserInfoAndJWT(true);
+      setUserInfoAndJWT(jwt, true);
     }
     setIsLoaderOpened(false);
 
-  }, [setUserInfoAndJWT, jwt]);
+  }, [setUserInfoAndJWT]);
 
   /*
     Аутентификация пользователя
   */
 
-  function handleSignIn({ email, password }) {
+  const handleSignIn = ({ email, password }) => {
     MainApi.signIn({ email, password })
       .then((response) => {
-        setJWT(response.token);
-        setUserInfoAndJWT(false);
+        setUserInfoAndJWT(response.token, false);
       })
       .catch((error) => {
         try {
-          error.json()
-            .then((err) => handleDisplayInfoTooltip({
-              title: `Ошибка входа: ${error.status} [${error.statusText}]`,
-              texts: [err.message],
-              image: onFailureAuth
-            }))
-            .catch((exeption) => console.error(exeption));
+          displayResponseError('Ошибка входа:', error);
         } catch {
-          handleDisplayInfoTooltip({
-            title: 'Неизвестная ошибка',
-            texts: [],
-            image: onFailureAuth
-          })
+          displayUnknownError();
         }
       });
   }
 
-  function handleSignUp({ name, email, password }) {
+  const handleSignUp = ({ name, email, password }) => {
     MainApi.signUp({ name, email, password })
       .then(() => {
-        handleDisplayInfoTooltip({
-          title: 'Вы успешно зарегистрировались!',
-          texts: [],
-          image: onSuccessAuth
-        });
+        displayResponseSuccess('Вы успешно зарегистрировались!');
         handleSignIn({ email, password });
       })
       .catch((error) => {
         try {
-          error.json()
-            .then((err) => handleDisplayInfoTooltip({
-              title: `Ошибка регистрации: ${error.status} [${error.statusText}]`,
-              texts: [err.message],
-              image: onFailureAuth
-            }))
-            .catch((exeption) => console.error(exeption));
+          displayResponseError('Ошибка регистрации:', error);
         } catch {
-          handleDisplayInfoTooltip({
-            title: 'Неизвестная ошибка',
-            texts: [],
-            image: onFailureAuth
-          })
+          displayUnknownError();
         }
       });
   }
 
-  function handleSignOut() {
+  const handleSignOut = () => {
     MainApi.signOut()
       .then(() => {
         onSignOut();
-        handleDisplayInfoTooltip({
-          title: 'Вы вышли из аккаунта',
-          texts: [],
-          image: onSuccessAuth
-        });
+        displayResponseSuccess('Вы вышли из аккаунта');
       })
       .catch((error) => {
         try {
-          error.json()
-            .then((err) => handleDisplayInfoTooltip({
-              title: `Ошибка выхода: ${error.status} [${error.statusText}]`,
-              texts: [err.message],
-              image: onFailureAuth
-            }))
-            .catch((exeption) => console.error(exeption));
+          displayResponseError('Ошибка выхода:', error);
         } catch {
-          handleDisplayInfoTooltip({
-            title: 'Неизвестная ошибка',
-            texts: [],
-            image: onFailureAuth
-          })
+          displayUnknownError();
         }
       });
   }
 
-  function onSignIn({ user, jwt }) {
+  const onSignIn = ({ user, jwt }) => {
     setIsLoggedIn(true);
     localStorage.setItem(localStorageKeys.jwt, jwt);
-    setJWT(jwt);
     setCurrentUser(user);
   }
 
-  function onSignOut() {
+  const onSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem(localStorageKeys.jwt);
-    setJWT(null);
     setCurrentUser(appInitValues.user);
   }
 
   /*
+    Редактирование пользователя
+  */
+  const handleUpdateUserInfo = ({ _id, email, name }, handleNewUserInfo) => {
+
+    const jwt = localStorage.getItem(localStorageKeys.jwt);
+
+    MainApi.updateUserInfo({ email, name }, jwt)
+      .then(() => {
+        displayResponseSuccess('Данные успешно изменены');
+        setCurrentUser({ _id, email, name });
+        handleNewUserInfo(true);
+      })
+      .catch((error) => {
+        try {
+          displayResponseError('Ошибка изменения профиля:', error);
+        } catch {
+          displayUnknownError();
+        }
+      });
+  }
+
+  /*
     Управление открытием модального окна
-   */
-  function toggleOpenInfoTooltip() {
+  */
+  const toggleOpenInfoTooltip = () => {
     isInfoTooltipOpened ? setInfoTooltipOpened(false) : setInfoTooltipOpened(true);
   }
 
-  function handleDisplayInfoTooltip({ title, texts, image }) {
+  const handleDisplayInfoTooltip = ({ title, texts, image }) => {
     setInfoTooltipOpened(true);
     setInfoTooltipData({ title, texts, image });
   }
@@ -260,7 +275,7 @@ function App() {
               element={
                 <Profile
                   onSignOut={handleSignOut}
-                  onDisplayInfoTooltip={handleDisplayInfoTooltip}
+                  onUpdateUserInfo={handleUpdateUserInfo}
                 />}
             />
             <Route
