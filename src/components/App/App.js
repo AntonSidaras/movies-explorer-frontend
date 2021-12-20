@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../../components/ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -348,44 +349,6 @@ function App() {
     }
   }
 
-
-  /*
-  function handleDeleteMovieCard(movieCard) {
-    setMoviesCards((state) => state.filter(card => card._id !== movieCard._id));
-    setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
-  }
-
-  function handleToggleSaveMovieCard(movieCard) {
-
-    const isAdded = movieCard.owner._id === currentUser._id;
-
-    if (!isAdded) {
-      const result = {
-        _id: movieCard._id,
-        image: movieCard.image,
-        owner: {
-          _id: currentUser._id
-        }
-      };
-
-      setMoviesCards((state) => state.map((card) => card._id === movieCard._id ? result : card));
-      setSavedMoviesCard([result, ...savedMoviesCards]);
-
-    }
-    else {
-      const result = {
-        _id: movieCard._id,
-        image: movieCard.image,
-        owner: {
-          _id: '123456789'
-        }
-      };
-
-      setMoviesCards((state) => state.map((card) => card._id === movieCard._id ? result : card));
-      setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
-    }
-  }*/
-
   /*
     Вёрстка компонента
   */
@@ -401,54 +364,66 @@ function App() {
             <Route
               exact path={appRoutes.content.movies}
               element={
-                <Movies
-                  onSearch={handleSearch}
-                  onFilter={handleFilterShortMeter}
-                  onAddMore={handleAddMoreMovies}
-                  onToggleSave={handleToggleSave}
-                  onDelete={null}
-                  area={areas.areaMovies}
-                  moviesCards={moviesCardsVisible}
-                  savedMovies={savedMovies}
-                  totalSize={moviesCards.length}
-                  filterState={filterCkeckboxSatate}
-                />}
+                <ProtectedRoute>
+                  <Movies
+                    onSearch={handleSearch}
+                    onFilter={handleFilterShortMeter}
+                    onAddMore={handleAddMoreMovies}
+                    onToggleSave={handleToggleSave}
+                    onDelete={null}
+                    area={areas.areaMovies}
+                    moviesCards={moviesCardsVisible}
+                    savedMovies={savedMovies}
+                    totalSize={moviesCards.length}
+                    filterState={filterCkeckboxSatate}
+                  />
+                </ProtectedRoute>}
             />
             <Route
               exact path={appRoutes.content.savedMovies}
               element={
-                <SavedMovies
-                  onSearch={handleSearchSaved}
-                  onFilter={handleFilterShortMeterSaved}
-                  onAddMore={null}
-                  onToggleSave={null}
-                  onDelete={handleDeleteFromSaved}
-                  area={areas.areaSavedMovies}
-                  moviesCards={savedMovies}
-                  savedMovies={null}
-                  totalSize={0}
-                  filterState={filterCkeckboxSavedSatate}
-                />}
+                <ProtectedRoute>
+                  <SavedMovies
+                    onSearch={handleSearchSaved}
+                    onFilter={handleFilterShortMeterSaved}
+                    onAddMore={null}
+                    onToggleSave={null}
+                    onDelete={handleDeleteFromSaved}
+                    area={areas.areaSavedMovies}
+                    moviesCards={savedMovies}
+                    savedMovies={null}
+                    totalSize={0}
+                    filterState={filterCkeckboxSavedSatate}
+                  />
+                </ProtectedRoute>
+              }
             />
             <Route
               exact path={appRoutes.profile}
               element={
-                <Profile
-                  onSignOut={handleSignOut}
-                  onUpdateUserInfo={handleUpdateUserInfo}
-                />}
+                <ProtectedRoute>
+                  <Profile
+                    onSignOut={handleSignOut}
+                    onUpdateUserInfo={handleUpdateUserInfo}
+                  />
+                </ProtectedRoute>
+              }
             />
             <Route
               exact path={appRoutes.auth.signIn}
               element={
-                <Login
+                !isLoggedIn ? <Login
                   onSignIn={handleSignIn}
+                /> : <Navigate
+                  to={appRoutes.content.movies}
                 />}
             />
             <Route exact path={appRoutes.auth.signUp}
               element={
-                <Register
+                !isLoggedIn ? <Register
                   onSignUp={handleSignUp}
+                /> : <Navigate
+                  to={appRoutes.content.movies}
                 />}
             />
             <Route
