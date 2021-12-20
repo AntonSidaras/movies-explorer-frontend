@@ -4,7 +4,7 @@ import { moviesCardListText } from "../../utils/constants";
 import { areas } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ area, moviesCards, totalSize, onAddMore, onToggleSave }) {
+function MoviesCardList({ area, moviesCards, savedMovies, totalSize, onAddMore, onToggleSave, onDelete }) {
 
   const isAreaSaved = area === areas.areaSavedMovies;
 
@@ -17,10 +17,12 @@ function MoviesCardList({ area, moviesCards, totalSize, onAddMore, onToggleSave 
       <div className='movies-card-list__container'>
         {moviesCards.map((item) => (
           <MoviesCard
-            key={item.id}
+            key={item.movieId}
             movieCard={item}
+            savedMovies={savedMovies}
             isSaved={isAreaSaved}
             onToggleSave={onToggleSave}
+            onDelete={onDelete}
           />
         ))}
       </div>

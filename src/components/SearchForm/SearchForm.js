@@ -3,7 +3,7 @@ import FilterCheckbox from "../FilterCheckbox/FilterCkeckbox";
 import { searchFormText } from "../../utils/constants";
 import './SearchForm.css';
 
-function SearchForm({ onSearch, onFilter }) {
+function SearchForm({ onSearch, onFilter, filterState }) {
 
   const inputRef = React.useRef();
 
@@ -50,7 +50,7 @@ function SearchForm({ onSearch, onFilter }) {
           />
         </div>
         <div className='search-form__filter'>
-          <FilterCheckbox onFilter={onFilter} />
+          <FilterCheckbox onFilter={onFilter} filterState={filterState} />
           <span className='search-form__span'>{searchFormText.checkbox}</span>
         </div>
       </form>

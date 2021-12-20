@@ -1,10 +1,10 @@
 import React from "react";
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ onFilter }) {
+function FilterCheckbox({ onFilter, filterState }) {
 
   const checkboxRef = React.useRef();
-  const [isChecked, setIsChecked] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(filterState);
 
   const toggleCheckboxState = () => {
     isChecked ? setIsChecked(false) : setIsChecked(true);

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
+import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from '../Profile/Profile';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
@@ -19,6 +20,7 @@ import {
 import {
   isKeyExistInLocalStorage,
   filterMovies,
+  transformFromBeatFilm,
   initialMoviesCount
 } from "../../utils/utils";
 import MainApi from "../../utils/MainApi";
@@ -29,6 +31,9 @@ import './App.css';
 
 function App() {
 
+  const [filterCkeckboxSatate, setFilterCkeckboxSatate] = React.useState(false);
+  const [filterCkeckboxSavedSatate, setfilterCkeckboxSavedSatate] = React.useState(false);
+
   const [currentUser, setCurrentUser] = React.useState(appInitValues.user);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [infoTooltipData, setInfoTooltipData] = React.useState(defaultLoginTooltipData);
@@ -38,6 +43,7 @@ function App() {
   const [moviesCardsVisible, setMoviesCardsVisible] = React.useState([]);
   const [moviesCardsUnfiltered, setMoviesCardsUnfiltered] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedMoviesUnfiltered, setSavedMoviesUnfiltered] = React.useState([]);
   const [position, setPosition] = React.useState(0);
 
   /*
@@ -74,10 +80,25 @@ function App() {
     Установка JWT и информации о пользователе
   */
 
+  const handleGetSavedMovies = React.useCallback((jwt) => {
+    MainApi.getSavedMovies(jwt)
+      .then((result) => {
+        setSavedMovies(result);
+      })
+      .catch((error) => {
+        handleDisplayInfoTooltip({
+          title: `Ошибка ${error.status} [${error.statusText}]`,
+          texts: [],
+          image: onFailureResponse
+        });
+      })
+  }, []);
+
   const setUserInfoAndJWT = React.useCallback((jwt, initStage) => {
     MainApi.getUserInfo(jwt)
       .then((user) => {
         onSignIn({ user, jwt });
+        handleGetSavedMovies(jwt);
       })
       .catch((error) => {
         localStorage.removeItem(localStorageKeys.jwt);
@@ -93,7 +114,7 @@ function App() {
           initStage ? console.error(error) : displayUnknownError();
         }
       });
-  }, [displayUnknownError]);
+  }, [displayUnknownError, handleGetSavedMovies]);
 
   /*
     Монтирование компонента App
@@ -101,16 +122,16 @@ function App() {
 
   React.useEffect(() => {
 
-    if (isKeyExistInLocalStorage(localStorageKeys.moviesCardsVisible)) {
-      setMoviesCardsVisible(JSON.parse(localStorage.getItem(localStorageKeys.moviesCardsVisible)));
-    }
-
     const jwt = localStorage.getItem(localStorageKeys.jwt);
 
     if (jwt) {
       setUserInfoAndJWT(jwt, true);
     }
     setIsLoaderOpened(false);
+
+    if (isKeyExistInLocalStorage(localStorageKeys.moviesCardsVisible)) {
+      setMoviesCardsVisible(JSON.parse(localStorage.getItem(localStorageKeys.moviesCardsVisible)));
+    }
 
   }, [setUserInfoAndJWT]);
 
@@ -218,7 +239,8 @@ function App() {
     setIsLoaderOpened(true);
     BeatFilm.getMovies()
       .then((result) => {
-        const filteredResult = filterMovies(result, input);
+        const transformedResult = transformFromBeatFilm(result);
+        const filteredResult = filterMovies(transformedResult, input);
         setMoviesCards(filteredResult); //все найденные
         setMoviesCardsVisible(filteredResult.slice(0, count)); //первоначальные
         setPosition(count);
@@ -237,13 +259,32 @@ function App() {
       });
   }
 
+  const handleSearchSaved = (input) => {
+    const filteredResult = filterMovies(savedMovies, input);
+    setSavedMovies(filteredResult);
+  }
+
   const handleFilterShortMeter = (state) => {
     if (state) {
+      setFilterCkeckboxSatate(true);
       setMoviesCardsUnfiltered(moviesCardsVisible);
       setMoviesCardsVisible(moviesCardsVisible.filter(movie => movie.duration <= 40))
     }
     else {
+      setFilterCkeckboxSatate(false);
       setMoviesCardsVisible(moviesCardsUnfiltered);
+    }
+  }
+
+  const handleFilterShortMeterSaved = (state) => {
+    if (state) {
+      setfilterCkeckboxSavedSatate(true);
+      setSavedMoviesUnfiltered(savedMovies);
+      setSavedMovies(savedMovies.filter(movie => movie.duration <= 40))
+    }
+    else {
+      setfilterCkeckboxSavedSatate(false);
+      setSavedMovies(savedMoviesUnfiltered);
     }
   }
 
@@ -261,38 +302,49 @@ function App() {
     Управление 
   */
 
-  const handleToggleSave = (state, {
-    movieId,
-    nameRU,
-    nameEN,
-    director,
-    country,
-    year,
-    duration,
-    description,
-    trailer,
-    image,
-    thumbnail
-  }) => {
+  const handleDeleteFromSaved = (movie) => {
+    const jwt = localStorage.getItem(localStorageKeys.jwt);
+    let id = movie._id;
+
+    if (id === undefined) {
+      savedMovies.forEach(item => {
+        if (item.owner._id === currentUser._id && item.movieId === movie.movieId) {
+          id = item._id;
+        }
+      });
+    }
+
+    MainApi.deleteMovie({ movieId: id }, jwt)
+      .then(() => {
+        setSavedMovies((state) => state.filter(card => card.movieId !== movie.movieId))
+      })
+      .catch((error) => {
+        handleDisplayInfoTooltip({
+          title: 'Ошибка',
+          texts: [error.status],
+          image: onFailureResponse
+        })
+      })
+  }
+
+  const handleToggleSave = (state, moviesCard) => {
+    const jwt = localStorage.getItem(localStorageKeys.jwt);
+
     if (state) {
-      setSavedMovies([{
-        movieId,
-        nameRU,
-        nameEN,
-        director,
-        country,
-        year,
-        duration,
-        description,
-        trailer,
-        image,
-        thumbnail
-      }, ...savedMovies]);
-      console.log('Added');
+      MainApi.saveMovie(moviesCard, jwt)
+        .then((result) => {
+          setSavedMovies([result, ...savedMovies]);
+        })
+        .catch((error) => {
+          handleDisplayInfoTooltip({
+            title: 'Ошибка',
+            texts: [error.status],
+            image: onFailureResponse
+          })
+        });
     }
     else {
-      setSavedMovies((state) => state.filter(card => card._id !== movieId));
-      console.log('Removed');
+      handleDeleteFromSaved(moviesCard);
     }
   }
 
@@ -354,22 +406,28 @@ function App() {
                   onFilter={handleFilterShortMeter}
                   onAddMore={handleAddMoreMovies}
                   onToggleSave={handleToggleSave}
+                  onDelete={null}
                   area={areas.areaMovies}
                   moviesCards={moviesCardsVisible}
+                  savedMovies={savedMovies}
                   totalSize={moviesCards.length}
+                  filterState={filterCkeckboxSatate}
                 />}
             />
             <Route
               exact path={appRoutes.content.savedMovies}
               element={
-                <Movies
-                  onSearch={null}
-                  onFilter={null}
+                <SavedMovies
+                  onSearch={handleSearchSaved}
+                  onFilter={handleFilterShortMeterSaved}
                   onAddMore={null}
                   onToggleSave={null}
+                  onDelete={handleDeleteFromSaved}
                   area={areas.areaSavedMovies}
                   moviesCards={savedMovies}
+                  savedMovies={null}
                   totalSize={0}
+                  filterState={filterCkeckboxSavedSatate}
                 />}
             />
             <Route

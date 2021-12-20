@@ -1,3 +1,5 @@
+import { moviesServerRoot } from "./constants";
+
 function isKeyExistInLocalStorage(key) {
   if (localStorage.getItem(key) === null) {
     return false;
@@ -47,11 +49,32 @@ function filterMovies(movies, input) {
   return movies.filter(filterFunction);
 }
 
+function transformFromBeatFilm(movies) {
 
+  return movies.map((movie) => {
+
+    const trasformedMovie = {};
+
+    trasformedMovie.movieId = movie.id;
+    trasformedMovie.nameRU = movie.nameRU;
+    trasformedMovie.nameEN = movie.nameEN;
+    trasformedMovie.director = movie.director;
+    trasformedMovie.country = movie.country;
+    trasformedMovie.year = movie.year;
+    trasformedMovie.duration = movie.duration;
+    trasformedMovie.description = movie.description;
+    trasformedMovie.trailer = movie.trailerLink;
+    trasformedMovie.image = `${moviesServerRoot}${movie.image.url}`;
+    trasformedMovie.thumbnail = trasformedMovie.image;
+
+    return trasformedMovie;
+  })
+}
 
 export {
   initialMoviesCount,
   filterMovies,
+  transformFromBeatFilm,
   isKeyExistInLocalStorage,
   saveMoviesToLocalStorage,
   owerwriteMoviesToLocalStorage,

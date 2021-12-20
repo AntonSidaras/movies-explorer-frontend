@@ -82,18 +82,7 @@ class MainApi {
     }).then(this._handleResponse);
   }
 
-  saveMovie({
-    movieId,
-    nameRU,
-    nameEN,
-    director,
-    country,
-    year,
-    duration,
-    description,
-    trailer,
-    image,
-    thumbnail }, jwt) {
+  saveMovie(movieCard, jwt) {
     return fetch(`${this._server}${this._movies}`, {
       method: 'POST',
       headers: {
@@ -101,17 +90,17 @@ class MainApi {
         'Authorization': `Bearer ${jwt}`
       },
       body: JSON.stringify({
-        movieId,
-        nameRU,
-        nameEN,
-        director,
-        country,
-        year,
-        duration,
-        description,
-        trailer,
-        image,
-        thumbnail
+        movieId: movieCard.movieId,
+        nameRU: movieCard.nameRU,
+        nameEN: movieCard.nameEN,
+        director: movieCard.director,
+        country: movieCard.country,
+        year: movieCard.year,
+        duration: movieCard.duration,
+        description: movieCard.description,
+        trailer: movieCard.trailer,
+        image: movieCard.image,
+        thumbnail: movieCard.thumbnail
       })
     }).then(this._handleResponse);
   }
