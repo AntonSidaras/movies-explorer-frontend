@@ -37,6 +37,7 @@ function App() {
   const [moviesCards, setMoviesCards] = React.useState([]);
   const [moviesCardsVisible, setMoviesCardsVisible] = React.useState([]);
   const [moviesCardsUnfiltered, setMoviesCardsUnfiltered] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState([]);
   const [position, setPosition] = React.useState(0);
 
   /*
@@ -258,7 +259,45 @@ function App() {
 
   /*
     Управление 
-  *//*
+  */
+
+  const handleToggleSave = (state, {
+    movieId,
+    nameRU,
+    nameEN,
+    director,
+    country,
+    year,
+    duration,
+    description,
+    trailer,
+    image,
+    thumbnail
+  }) => {
+    if (state) {
+      setSavedMovies([{
+        movieId,
+        nameRU,
+        nameEN,
+        director,
+        country,
+        year,
+        duration,
+        description,
+        trailer,
+        image,
+        thumbnail
+      }, ...savedMovies]);
+      console.log('Added');
+    }
+    else {
+      setSavedMovies((state) => state.filter(card => card._id !== movieId));
+      console.log('Removed');
+    }
+  }
+
+
+  /*
   function handleDeleteMovieCard(movieCard) {
     setMoviesCards((state) => state.filter(card => card._id !== movieCard._id));
     setSavedMoviesCard((state) => state.filter(card => card._id !== movieCard._id));
@@ -314,9 +353,9 @@ function App() {
                   onSearch={handleSearch}
                   onFilter={handleFilterShortMeter}
                   onAddMore={handleAddMoreMovies}
+                  onToggleSave={handleToggleSave}
                   area={areas.areaMovies}
                   moviesCards={moviesCardsVisible}
-                  isSaved={false}
                   totalSize={moviesCards.length}
                 />}
             />
@@ -327,9 +366,9 @@ function App() {
                   onSearch={null}
                   onFilter={null}
                   onAddMore={null}
+                  onToggleSave={null}
                   area={areas.areaSavedMovies}
-                  moviesCards={moviesCardsVisible}
-                  isSaved={true}
+                  moviesCards={savedMovies}
                   totalSize={0}
                 />}
             />

@@ -3,12 +3,12 @@ import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
 import { moviesCardAlt, moviesServerRoot } from "../../utils/constants";
 import './MoviesCard.css';
 
-function MoviesCard({ movieCard, isSaved }) {
+function MoviesCard({ movieCard, isSaved, onToggleSave }) {
 
   const getTimeFromMins = (duration) => Math.trunc(duration / 60) + 'ч ' + (duration % 60) + 'м';
 
   const action = !isSaved ?
-    <SaveCheckbox movieCard={movieCard} /> :
+    <SaveCheckbox movieCard={movieCard} onToggleSave={onToggleSave} /> :
     <button className='movies-card__remove' type='button' />;
 
   return (

@@ -1,9 +1,12 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { moviesCardListText } from "../../utils/constants";
+import { areas } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ moviesCards, isSaved, totalSize, onAddMore }) {
+function MoviesCardList({ area, moviesCards, totalSize, onAddMore, onToggleSave }) {
+
+  const isAreaSaved = area === areas.areaSavedMovies;
 
   const handleAddMore = () => {
     onAddMore(window.innerWidth);
@@ -16,13 +19,14 @@ function MoviesCardList({ moviesCards, isSaved, totalSize, onAddMore }) {
           <MoviesCard
             key={item.id}
             movieCard={item}
-            isSaved={isSaved}
+            isSaved={isAreaSaved}
+            onToggleSave={onToggleSave}
           />
         ))}
       </div>
       <button
         className={`movies-card-list__button-more 
-          ${isSaved || moviesCards.length === 0 || moviesCards.length >= totalSize ? 'movies-card-list__button-more_hidden' : ''}`}
+          ${isAreaSaved || moviesCards.length === 0 || moviesCards.length >= totalSize ? 'movies-card-list__button-more_hidden' : ''}`}
         onClick={handleAddMore}
       >
         {moviesCardListText.buttonMoreText}

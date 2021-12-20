@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import './Movies.css';
 
-function Movies({ area, moviesCards, isSaved, onSearch, onFilter, onAddMore, totalSize }) {
+function Movies({ area, moviesCards, onSearch, onFilter, onAddMore, onToggleSave, totalSize }) {
 
   return (
     <>
@@ -14,9 +14,10 @@ function Movies({ area, moviesCards, isSaved, onSearch, onFilter, onAddMore, tot
         <SearchForm onSearch={onSearch} onFilter={onFilter} />
         <MoviesCardList
           moviesCards={moviesCards}
-          isSaved={isSaved}
+          area={area}
           totalSize={totalSize}
           onAddMore={onAddMore}
+          onToggleSave={onToggleSave}
         />
       </main>
       <Footer area={area} />
