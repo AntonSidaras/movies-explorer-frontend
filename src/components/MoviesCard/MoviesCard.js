@@ -13,14 +13,14 @@ function MoviesCard({ movieCard, isSaved }) {
 
   return (
     <div className='movies-card' id={movieCard.id}>
-      <div className='movies-card__col'>
+      <a className='movies-card__col' target='_blank' rel='noopener noreferrer' href={movieCard.trailerLink}>
         <img className='movies-card__img' src={`${moviesServerRoot}${movieCard.image.url}`} alt={moviesCardAlt} />
         <div className='movies-card__row'>
           <h2 className='movies-card__title'>{movieCard.nameRU}</h2>
           {action}
         </div>
         <span className='movies-card__time'>{getTimeFromMins(movieCard.duration)}</span>
-      </div>
+      </a>
     </div>
   );
 }

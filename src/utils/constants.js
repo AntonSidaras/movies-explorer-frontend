@@ -101,6 +101,7 @@ const headerText = {
 
 const localStorageKeys = {
   moviesCards: 'moviesCards',
+  moviesCardsVisible: 'moviesCardsVisible',
   jwt: 'jwt'
 }
 

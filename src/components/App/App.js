@@ -17,9 +17,12 @@ import {
   localStorageKeys
 } from "../../utils/constants";
 import {
-  isKeyExistInLocalStorage
+  isKeyExistInLocalStorage,
+  filterMovies,
+  initialMoviesCount
 } from "../../utils/utils";
 import MainApi from "../../utils/MainApi";
+import BeatFilm from '../../utils/MoviesApi';
 import onSuccessResponse from '../../images/infotooltip/ok.svg';
 import onFailureResponse from '../../images/infotooltip/fail.svg';
 import './App.css';
@@ -32,6 +35,9 @@ function App() {
   const [isInfoTooltipOpened, setInfoTooltipOpened] = React.useState(false);
   const [isLoaderOpened, setIsLoaderOpened] = React.useState(false);
   const [moviesCards, setMoviesCards] = React.useState([]);
+  const [moviesCardsVisible, setMoviesCardsVisible] = React.useState([]);
+  const [moviesCardsUnfiltered, setMoviesCardsUnfiltered] = React.useState([]);
+  const [position, setPosition] = React.useState(0);
 
   /*
     API Responses
@@ -64,7 +70,7 @@ function App() {
   }, []);
 
   /*
-    setUserInfoAndJWT
+    Установка JWT и информации о пользователе
   */
 
   const setUserInfoAndJWT = React.useCallback((jwt, initStage) => {
@@ -89,13 +95,13 @@ function App() {
   }, [displayUnknownError]);
 
   /*
-    Монтирование компонента 
+    Монтирование компонента App
   */
 
   React.useEffect(() => {
 
-    if (isKeyExistInLocalStorage(localStorageKeys.moviesCards)) {
-      setMoviesCards(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
+    if (isKeyExistInLocalStorage(localStorageKeys.moviesCardsVisible)) {
+      setMoviesCardsVisible(JSON.parse(localStorage.getItem(localStorageKeys.moviesCardsVisible)));
     }
 
     const jwt = localStorage.getItem(localStorageKeys.jwt);
@@ -202,6 +208,55 @@ function App() {
   }
 
   /*
+    Загрузка фильмов
+  */
+
+  const handleSearch = (input) => {
+    const deviceWidth = window.innerWidth;
+    const count = initialMoviesCount(deviceWidth);
+    setIsLoaderOpened(true);
+    BeatFilm.getMovies()
+      .then((result) => {
+        const filteredResult = filterMovies(result, input);
+        setMoviesCards(filteredResult); //все найденные
+        setMoviesCardsVisible(filteredResult.slice(0, count)); //первоначальные
+        setPosition(count);
+        localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(filteredResult.slice(0, count)));
+        //localStorage.setItem(localStorageKeys.moviesCards, JSON.stringify(filteredResult));
+      })
+      .catch((error) => {
+        handleDisplayInfoTooltip({
+          title: 'Ошибка',
+          texts: ['Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз', error.status],
+          image: onFailureResponse
+        })
+      })
+      .finally(() => {
+        setIsLoaderOpened(false);
+      });
+  }
+
+  const handleFilterShortMeter = (state) => {
+    if (state) {
+      setMoviesCardsUnfiltered(moviesCardsVisible);
+      setMoviesCardsVisible(moviesCardsVisible.filter(movie => movie.duration <= 40))
+    }
+    else {
+      setMoviesCardsVisible(moviesCardsUnfiltered);
+    }
+  }
+
+  const handleAddMoreMovies = (deviceWidth) => {
+    const count = initialMoviesCount(deviceWidth);
+    const nextPosition = position + count;
+    const newMovies = moviesCards.slice(position, nextPosition);
+
+    setMoviesCardsVisible([...moviesCardsVisible, ...newMovies]);
+    setPosition(nextPosition);
+    localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(moviesCardsVisible));
+  }
+
+  /*
     Управление 
   *//*
   function handleDeleteMovieCard(movieCard) {
@@ -256,18 +311,26 @@ function App() {
               exact path={appRoutes.content.movies}
               element={
                 <Movies
+                  onSearch={handleSearch}
+                  onFilter={handleFilterShortMeter}
+                  onAddMore={handleAddMoreMovies}
                   area={areas.areaMovies}
-                  moviesCards={moviesCards}
+                  moviesCards={moviesCardsVisible}
                   isSaved={false}
+                  totalSize={moviesCards.length}
                 />}
             />
             <Route
               exact path={appRoutes.content.savedMovies}
               element={
                 <Movies
+                  onSearch={null}
+                  onFilter={null}
+                  onAddMore={null}
                   area={areas.areaSavedMovies}
-                  moviesCards={moviesCards}
+                  moviesCards={moviesCardsVisible}
                   isSaved={true}
+                  totalSize={0}
                 />}
             />
             <Route

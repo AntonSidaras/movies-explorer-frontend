@@ -3,7 +3,7 @@ import './SaveCheckbox.css';
 
 function SaveCheckbox({ movieCard }) {
 
-  const [isChecked, setIsChecked] = React.useState(true);
+  const [isChecked, setIsChecked] = React.useState(false);
 
   const toggleCheckboxState = () => {
     isChecked ? setIsChecked(false) : setIsChecked(true);
@@ -14,11 +14,11 @@ function SaveCheckbox({ movieCard }) {
       <input
         className='save-checkbox__checkbox'
         type='checkbox'
-        id={`${movieCard._id}save`}
+        id={`${movieCard.id}save`}
         defaultChecked={isChecked}
         onChange={toggleCheckboxState}
       />
-      <label className='save-checkbox__label' htmlFor={`${movieCard._id}save`} />
+      <label className='save-checkbox__label' htmlFor={`${movieCard.id}save`} />
     </div>
   );
 }

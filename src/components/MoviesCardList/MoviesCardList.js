@@ -3,7 +3,11 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { moviesCardListText } from "../../utils/constants";
 import './MoviesCardList.css';
 
-function MoviesCardList({ moviesCards, isSaved }) {
+function MoviesCardList({ moviesCards, isSaved, totalSize, onAddMore }) {
+
+  const handleAddMore = () => {
+    onAddMore(window.innerWidth);
+  }
 
   return (
     <section className='movies-card-list'>
@@ -17,7 +21,10 @@ function MoviesCardList({ moviesCards, isSaved }) {
         ))}
       </div>
       <button
-        className={`movies-card-list__button-more ${isSaved ? 'movies-card-list__button-more_hidden' : ''}`}>
+        className={`movies-card-list__button-more 
+          ${isSaved || moviesCards.length === 0 || moviesCards.length >= totalSize ? 'movies-card-list__button-more_hidden' : ''}`}
+        onClick={handleAddMore}
+      >
         {moviesCardListText.buttonMoreText}
       </button>
     </section>
