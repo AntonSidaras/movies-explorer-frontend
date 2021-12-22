@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../../components/ProtectedRoute/ProtectedRoute';
 import Main from '../Main/Main';
@@ -36,7 +36,7 @@ function App() {
   const [filterCkeckboxSavedSatate, setfilterCkeckboxSavedSatate] = React.useState(false);
 
   const [currentUser, setCurrentUser] = React.useState(appInitValues.user);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [infoTooltipData, setInfoTooltipData] = React.useState(defaultLoginTooltipData);
   const [isInfoTooltipOpened, setInfoTooltipOpened] = React.useState(false);
   const [isLoaderOpened, setIsLoaderOpened] = React.useState(false);
@@ -44,6 +44,7 @@ function App() {
   const [moviesCardsVisible, setMoviesCardsVisible] = React.useState([]);
   const [moviesCardsUnfiltered, setMoviesCardsUnfiltered] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedMoviesVisible, setSavedMoviesVisible] = React.useState([]);
   const [savedMoviesUnfiltered, setSavedMoviesUnfiltered] = React.useState([]);
   const [position, setPosition] = React.useState(0);
 
@@ -84,7 +85,9 @@ function App() {
   const handleGetSavedMovies = React.useCallback((jwt) => {
     MainApi.getSavedMovies(jwt)
       .then((result) => {
-        setSavedMovies(result);
+        const saved = result.filter(card => card.owner._id === currentUser._id);
+        setSavedMovies(saved);
+        setSavedMoviesVisible(saved);
       })
       .catch((error) => {
         handleDisplayInfoTooltip({
@@ -93,7 +96,7 @@ function App() {
           image: onFailureResponse
         });
       })
-  }, []);
+  }, [currentUser._id]);
 
   const setUserInfoAndJWT = React.useCallback((jwt, initStage) => {
     MainApi.getUserInfo(jwt)
@@ -103,6 +106,7 @@ function App() {
       })
       .catch((error) => {
         localStorage.removeItem(localStorageKeys.jwt);
+        setIsLoggedIn(false);
         try {
           error.json()
             .then((err) => initStage && error.status === 401 ? console.error(error) : handleDisplayInfoTooltip({
@@ -124,9 +128,11 @@ function App() {
   React.useEffect(() => {
 
     const jwt = localStorage.getItem(localStorageKeys.jwt);
-
     if (jwt) {
       setUserInfoAndJWT(jwt, true);
+    }
+    else {
+      setIsLoggedIn(false);
     }
     setIsLoaderOpened(false);
 
@@ -140,12 +146,13 @@ function App() {
     Аутентификация пользователя
   */
 
-  const handleSignIn = ({ email, password }) => {
+  const handleSignIn = ({ email, password }, setFormAttributeDisabled) => {
     MainApi.signIn({ email, password })
       .then((response) => {
         setUserInfoAndJWT(response.token, false);
       })
       .catch((error) => {
+        setFormAttributeDisabled(false);
         try {
           displayResponseError('Ошибка входа:', error);
         } catch {
@@ -154,13 +161,14 @@ function App() {
       });
   }
 
-  const handleSignUp = ({ name, email, password }) => {
+  const handleSignUp = ({ name, email, password }, setFormAttributeDisabled) => {
     MainApi.signUp({ name, email, password })
       .then(() => {
         displayResponseSuccess('Вы успешно зарегистрировались!');
         handleSignIn({ email, password });
       })
       .catch((error) => {
+        setFormAttributeDisabled(false);
         try {
           displayResponseError('Ошибка регистрации:', error);
         } catch {
@@ -193,13 +201,15 @@ function App() {
   const onSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem(localStorageKeys.jwt);
+    localStorage.removeItem(localStorageKeys.moviesCards);
+    localStorage.removeItem(localStorageKeys.moviesCardsVisible);
     setCurrentUser(appInitValues.user);
   }
 
   /*
     Редактирование пользователя
   */
-  const handleUpdateUserInfo = ({ _id, email, name }, handleNewUserInfo) => {
+  const handleUpdateUserInfo = ({ _id, email, name }, handleNewUserInfo, setFormAttributeDisabled) => {
 
     const jwt = localStorage.getItem(localStorageKeys.jwt);
 
@@ -207,9 +217,11 @@ function App() {
       .then(() => {
         displayResponseSuccess('Данные успешно изменены');
         setCurrentUser({ _id, email, name });
+        setFormAttributeDisabled(false);
         handleNewUserInfo(true);
       })
       .catch((error) => {
+        setFormAttributeDisabled(false);
         try {
           displayResponseError('Ошибка изменения профиля:', error);
         } catch {
@@ -234,19 +246,35 @@ function App() {
     Загрузка фильмов
   */
 
-  const handleSearch = (input) => {
+  const handleSearch = (input, notFound) => {
     const deviceWidth = window.innerWidth;
     const count = initialMoviesCount(deviceWidth);
+
+    const onSearch = (cards) => {
+      const transformedResult = cards;
+      const filteredResult = filterMovies(transformedResult, input);
+      if (filteredResult.length === 0) {
+        notFound();
+      }
+      setMoviesCards(filteredResult); //все найденные
+      setMoviesCardsVisible(filteredResult.slice(0, count)); //первоначальные
+      setPosition(count);
+      return filteredResult.slice(0, count);
+    }
+
+    if (isKeyExistInLocalStorage(localStorageKeys.moviesCards)) {
+      setIsLoaderOpened(true);
+      onSearch(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
+      setIsLoaderOpened(false);
+      return;
+    }
+
     setIsLoaderOpened(true);
     BeatFilm.getMovies()
       .then((result) => {
-        const transformedResult = transformFromBeatFilm(result);
-        const filteredResult = filterMovies(transformedResult, input);
-        setMoviesCards(filteredResult); //все найденные
-        setMoviesCardsVisible(filteredResult.slice(0, count)); //первоначальные
-        setPosition(count);
-        localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(filteredResult.slice(0, count)));
-        //localStorage.setItem(localStorageKeys.moviesCards, JSON.stringify(filteredResult));
+        const filteredResult = onSearch(transformFromBeatFilm(result));
+        localStorage.setItem(localStorageKeys.moviesCards, JSON.stringify(transformFromBeatFilm(result)));
+        localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(filteredResult));
       })
       .catch((error) => {
         handleDisplayInfoTooltip({
@@ -260,9 +288,12 @@ function App() {
       });
   }
 
-  const handleSearchSaved = (input) => {
+  const handleSearchSaved = (input, notFound) => {
     const filteredResult = filterMovies(savedMovies, input);
-    setSavedMovies(filteredResult);
+    setSavedMoviesVisible(filteredResult);
+    if (filteredResult.length === 0) {
+      notFound();
+    }
   }
 
   const handleFilterShortMeter = (state) => {
@@ -280,12 +311,12 @@ function App() {
   const handleFilterShortMeterSaved = (state) => {
     if (state) {
       setfilterCkeckboxSavedSatate(true);
-      setSavedMoviesUnfiltered(savedMovies);
-      setSavedMovies(savedMovies.filter(movie => movie.duration <= 40))
+      setSavedMoviesUnfiltered(savedMoviesVisible);
+      setSavedMoviesVisible(savedMoviesVisible.filter(movie => movie.duration <= 40))
     }
     else {
       setfilterCkeckboxSavedSatate(false);
-      setSavedMovies(savedMoviesUnfiltered);
+      setSavedMoviesVisible(savedMoviesUnfiltered);
     }
   }
 
@@ -317,7 +348,8 @@ function App() {
 
     MainApi.deleteMovie({ movieId: id }, jwt)
       .then(() => {
-        setSavedMovies((state) => state.filter(card => card.movieId !== movie.movieId))
+        setSavedMovies((state) => state.filter(card => card.movieId !== movie.movieId));
+        setSavedMoviesVisible((state) => state.filter(card => card.movieId !== movie.movieId));
       })
       .catch((error) => {
         handleDisplayInfoTooltip({
@@ -335,6 +367,7 @@ function App() {
       MainApi.saveMovie(moviesCard, jwt)
         .then((result) => {
           setSavedMovies([result, ...savedMovies]);
+          setSavedMoviesVisible([result, ...savedMoviesVisible]);
         })
         .catch((error) => {
           handleDisplayInfoTooltip({
@@ -353,8 +386,8 @@ function App() {
     Вёрстка компонента
   */
   return (
-    <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: isLoggedIn }}>
-      <Router>
+    <BrowserRouter>
+      <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: isLoggedIn }}>
         <div className='app app__content'>
           <Routes>
             <Route
@@ -390,7 +423,7 @@ function App() {
                     onToggleSave={null}
                     onDelete={handleDeleteFromSaved}
                     area={areas.areaSavedMovies}
-                    moviesCards={savedMovies}
+                    moviesCards={savedMoviesVisible}
                     savedMovies={null}
                     totalSize={0}
                     filterState={filterCkeckboxSavedSatate}
@@ -440,8 +473,8 @@ function App() {
             isOpened={isLoaderOpened}
           />
         </div>
-      </Router>
-    </CurrentUserContext.Provider>
+      </CurrentUserContext.Provider>
+    </BrowserRouter>
   );
 }
 

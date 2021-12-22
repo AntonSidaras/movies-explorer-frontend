@@ -10,6 +10,7 @@ function Profile({ onSignOut, onUpdateUserInfo }) {
 
   const emailRef = React.useRef();
   const nameRef = React.useRef();
+  const buttonRef = React.useRef();
 
   const [emailErrorText, setEmailErrorText] = React.useState('');
   const [nameErrorText, setNameErrorText] = React.useState('');
@@ -49,12 +50,19 @@ function Profile({ onSignOut, onUpdateUserInfo }) {
     checkIsUserInfoSame();
   }
 
+  function setFormAttributeDisabled(value) {
+    nameRef.current.disabled = value
+    emailRef.current.disabled = value;
+    buttonRef.current.disabled = value;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+    setFormAttributeDisabled(true);
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const _id = user.currentUser._id;
-    onUpdateUserInfo({ _id, email, name }, setisUserInfoSame);
+    onUpdateUserInfo({ _id, email, name }, setisUserInfoSame, setFormAttributeDisabled);
   }
 
   function handleSignOut() {
@@ -95,6 +103,7 @@ function Profile({ onSignOut, onUpdateUserInfo }) {
             className={`profile__edit-button ${!(isValidEmail && isValidName) || isUserInfoSame ? 'profile__edit-button_disabled' : ''}`}
             type='submit'
             disabled={!(isValidEmail && isValidName) || isUserInfoSame}
+            ref={buttonRef}
           >{profileText.editButtonText} </button>
         </form>
         <button

@@ -25,11 +25,11 @@ function saveMoviesToLocalStorageAtAppMount(key, movies, len) {
 }
 
 function initialMoviesCount(width) {
-  if (width >= 1280)
-    return 12;
-  if (width > 480 && width < 1280)
-    return 8;
-  if (width <= 480)
+  if (width > 1024)
+    return 4;
+  if (width > 500 && width <= 1024)
+    return 2;
+  if (width <= 500)
     return 5;
 }
 

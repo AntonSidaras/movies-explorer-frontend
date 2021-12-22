@@ -9,6 +9,7 @@ function SearchForm({ onSearch, onFilter, filterState }) {
 
   const [inputErrorText, setInputErrorText] = React.useState('');
   const [isValidInput, setIsValidInput] = React.useState(false);
+  const [isNotFoundVisible, setIsNotFoundVisible] = React.useState(false);
 
   function checkValidInput() {
     if (!inputRef.current.validity.valid) {
@@ -21,10 +22,15 @@ function SearchForm({ onSearch, onFilter, filterState }) {
     }
   }
 
+  function notFound() {
+    setIsNotFoundVisible(true);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     if (isValidInput) {
-      onSearch(inputRef.current.value);
+      setIsNotFoundVisible(false);
+      onSearch(inputRef.current.value, notFound);
     }
     else {
       console.log(inputErrorText);
@@ -43,6 +49,7 @@ function SearchForm({ onSearch, onFilter, filterState }) {
             ref={inputRef}
             onChange={checkValidInput}
           />
+          <span className={`search-form__not-found ${isNotFoundVisible ? 'search-form__not-found_visible' : ''}`}>Ничего не найдено</span>
           <button
             className='search-form__button'
             type='submit'

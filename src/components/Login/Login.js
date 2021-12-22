@@ -8,6 +8,7 @@ function Login({ onSignIn }) {
 
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
+  const buttonRef = React.useRef();
 
   const [emailErrorText, setEmailErrorText] = React.useState('');
   const [passwordErrorText, setPasswordErrorText] = React.useState('');
@@ -44,13 +45,21 @@ function Login({ onSignIn }) {
     }
   }
 
+  function setFormAttributeDisabled(value) {
+    emailRef.current.disabled = value;
+    passwordRef.current.disabled = value;
+    buttonRef.current.disabled = value;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+
+    setFormAttributeDisabled(true);
 
     onSignIn({
       email: emailRef.current.value,
       password: passwordRef.current.value
-    });
+    }, setFormAttributeDisabled);
 
     if (isValidCredentials) {
       setIsSignInError(false);
@@ -76,6 +85,7 @@ function Login({ onSignIn }) {
               id='emailLogin'
               className='login__input'
               type='email'
+              disabled={false}
               required
               ref={emailRef}
               onChange={checkValidEmail}
@@ -89,6 +99,7 @@ function Login({ onSignIn }) {
               id='passwordLogin'
               className={`login__input ${isSignInError ? 'login__input_color_red' : ''}`}
               type='password'
+              disabled={false}
               required
               ref={passwordRef}
               onChange={checkValidPassword}
@@ -102,6 +113,7 @@ function Login({ onSignIn }) {
             className={`login__sign-in-button ${!isValidCredentials ? 'login__sign-in-button_type_disabled' : ''}`}
             type='submit'
             disabled={!isValidCredentials}
+            ref={buttonRef}
           >{loginText.buttonText}</button>
         </form>
         <div className='login__bottom'>

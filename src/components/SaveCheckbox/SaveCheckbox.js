@@ -5,17 +5,15 @@ import './SaveCheckbox.css';
 function SaveCheckbox({ movieCard, savedMovies, onToggleSave }) {
 
   const user = React.useContext(CurrentUserContext);
-  let ininialChecked = false;
 
   savedMovies.forEach(item => {
     if (item.owner._id === user.currentUser._id && item.movieId === movieCard.movieId) {
-      ininialChecked = true;
+      console.log(item.owner._id, user.currentUser._id, item.movieId, movieCard.movieId);
     }
-    //console.log(item.owner._id, user.currentUser._id, item.movieId, movieCard.movieId);
   });
 
   const checkboxRef = React.useRef();
-  const [isChecked, setIsChecked] = React.useState(ininialChecked);
+  const [isChecked, setIsChecked] = React.useState(false);
 
   const toggleCheckboxState = () => {
     isChecked ? setIsChecked(false) : setIsChecked(true);
@@ -32,7 +30,7 @@ function SaveCheckbox({ movieCard, savedMovies, onToggleSave }) {
         className='save-checkbox__checkbox'
         type='checkbox'
         id={`${movieCard.movieId}save`}
-        defaultChecked={isChecked}
+        checked={isChecked}
         onChange={toggleCheckboxState}
         ref={checkboxRef}
       />

@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function ProtectedRoute({ children }) {
   const user = React.useContext(CurrentUserContext); // получаем значения из контекста
-  return user.isLoggedIn ? children : <Navigate to="/signin" />;
+  return user.isLoggedIn ? children : <Navigate to="/" />;
 }
 
 export default ProtectedRoute;

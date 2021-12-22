@@ -9,6 +9,7 @@ function Register({ onSignUp }) {
   const nameRef = React.useRef();
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
+  const buttonRef = React.useRef();
 
   const [nameErrorText, setNameErrorText] = React.useState('');
   const [emailErrorText, setEmailErrorText] = React.useState('');
@@ -53,14 +54,23 @@ function Register({ onSignUp }) {
     }
   }
 
+  function setFormAttributeDisabled(value) {
+    nameRef.current.disabled = value
+    emailRef.current.disabled = value;
+    passwordRef.current.disabled = value;
+    buttonRef.current.disabled = value;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+
+    setFormAttributeDisabled(true);
 
     onSignUp({
       name: nameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value
-    });
+    }, setFormAttributeDisabled);
 
     if (isValidName && isValidEmail && isValidPassword) {
       setIsSignUpError(false);
@@ -85,6 +95,7 @@ function Register({ onSignUp }) {
               id='nameRegister'
               className='register__input'
               type='text'
+              disabled={false}
               minLength='2'
               maxLength='30'
               required
@@ -100,6 +111,7 @@ function Register({ onSignUp }) {
               id='emailRegister'
               className='register__input'
               type='email'
+              disabled={false}
               required
               ref={emailRef}
               onChange={checkValidEmail}
@@ -113,6 +125,7 @@ function Register({ onSignUp }) {
               id='passwordRegister'
               className={`register__input ${isSignUpError ? 'register__input_color_red' : ''}`}
               type='password'
+              disabled={false}
               required
               ref={passwordRef}
               onChange={checkValidPassword}
@@ -126,6 +139,7 @@ function Register({ onSignUp }) {
             className={`register__sign-up-button ${!(isValidName && isValidEmail && isValidPassword) ? 'register__sign-up-button_type_disabled' : ''}`}
             type='submit'
             disabled={!(isValidName && isValidEmail && isValidPassword)}
+            ref={buttonRef}
           >{registerText.buttonText}</button>
         </form>
         <div className='register__bottom'>
