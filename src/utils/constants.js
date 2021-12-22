@@ -101,7 +101,13 @@ const headerText = {
 
 const localStorageKeys = {
   moviesCards: 'moviesCards',
+  moviesCardsSearched: 'moviesCardsSearched',
   moviesCardsVisible: 'moviesCardsVisible',
+  moviesCardsSaved: 'moviesCardsSaved',
+  filterCkeckboxSatate: 'filterCkeckboxSatate',
+  filterCkeckboxSavedSatate: 'filterCkeckboxSavedSatate',
+  position: 'position',
+  user: 'user',
   jwt: 'jwt'
 }
 

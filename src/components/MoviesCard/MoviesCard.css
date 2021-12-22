@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.movies-card_hidden{
+  display: none;
+}
+
 .movies-card__col{
   display: flex;
   flex-direction: column;

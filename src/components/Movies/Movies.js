@@ -20,6 +20,7 @@ function Movies({ area, moviesCards, savedMovies, onSearch, onFilter, onAddMore,
           onAddMore={onAddMore}
           onToggleSave={onToggleSave}
           onDelete={onDelete}
+          filterState={filterState}
         />
       </main>
       <Footer area={area} />

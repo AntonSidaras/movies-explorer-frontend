@@ -3,7 +3,7 @@ import SaveCheckbox from "../SaveCheckbox/SaveCheckbox";
 import { moviesCardAlt } from "../../utils/constants";
 import './MoviesCard.css';
 
-function MoviesCard({ movieCard, savedMovies, isSaved, onToggleSave, onDelete }) {
+function MoviesCard({ movieCard, isSaved, onToggleSave, onDelete, filterState }) {
 
   const getTimeFromMins = (duration) => Math.trunc(duration / 60) + 'ч ' + (duration % 60) + 'м';
 
@@ -12,7 +12,10 @@ function MoviesCard({ movieCard, savedMovies, isSaved, onToggleSave, onDelete })
   }
 
   const action = !isSaved ?
-    <SaveCheckbox movieCard={movieCard} savedMovies={savedMovies} onToggleSave={onToggleSave} /> :
+    <SaveCheckbox
+      movieCard={movieCard}
+      onToggleSave={onToggleSave}
+    /> :
     <button
       className='movies-card__remove'
       type='button'
@@ -20,7 +23,7 @@ function MoviesCard({ movieCard, savedMovies, isSaved, onToggleSave, onDelete })
     />;
 
   return (
-    <div className='movies-card' id={movieCard.movieId}>
+    <div className={`movies-card ${filterState && movieCard.duration >= 40 ? 'movies-card_hidden' : ''}`} id={movieCard.movieId}>
       <div className='movies-card__col'>
         <a className='movies-card__link' target='_blank' rel='noopener noreferrer' href={movieCard.trailer}>
           <img className='movies-card__img' src={movieCard.image} alt={moviesCardAlt} />

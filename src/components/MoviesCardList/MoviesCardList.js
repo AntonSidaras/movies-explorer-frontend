@@ -4,7 +4,7 @@ import { moviesCardListText } from "../../utils/constants";
 import { areas } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ area, moviesCards, savedMovies, totalSize, onAddMore, onToggleSave, onDelete }) {
+function MoviesCardList({ area, moviesCards, savedMovies, totalSize, onAddMore, onToggleSave, onDelete, filterState }) {
 
   const isAreaSaved = area === areas.areaSavedMovies;
 
@@ -23,6 +23,7 @@ function MoviesCardList({ area, moviesCards, savedMovies, totalSize, onAddMore, 
             isSaved={isAreaSaved}
             onToggleSave={onToggleSave}
             onDelete={onDelete}
+            filterState={filterState}
           />
         ))}
       </div>

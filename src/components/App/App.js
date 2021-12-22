@@ -32,8 +32,16 @@ import './App.css';
 
 function App() {
 
-  const [filterCkeckboxSatate, setFilterCkeckboxSatate] = React.useState(false);
-  const [filterCkeckboxSavedSatate, setfilterCkeckboxSavedSatate] = React.useState(false);
+  const checkboxState = isKeyExistInLocalStorage(localStorageKeys.filterCkeckboxSatate) ?
+    JSON.parse(localStorage.getItem(localStorageKeys.filterCkeckboxSatate))
+    : false;
+
+  const checkboxSavedState = isKeyExistInLocalStorage(localStorageKeys.filterCkeckboxSavedSatate) ?
+    JSON.parse(localStorage.getItem(localStorageKeys.filterCkeckboxSavedSatate))
+    : false;
+
+  const [filterCkeckboxSatate, setFilterCkeckboxSatate] = React.useState(checkboxState);
+  const [filterCkeckboxSavedSatate, setfilterCkeckboxSavedSatate] = React.useState(checkboxSavedState);
 
   const [currentUser, setCurrentUser] = React.useState(appInitValues.user);
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
@@ -41,106 +49,59 @@ function App() {
   const [isInfoTooltipOpened, setInfoTooltipOpened] = React.useState(false);
   const [isLoaderOpened, setIsLoaderOpened] = React.useState(false);
   const [moviesCards, setMoviesCards] = React.useState([]);
+  const [moviesCardsSearched, setMoviesCardsSearched] = React.useState([]);
   const [moviesCardsVisible, setMoviesCardsVisible] = React.useState([]);
-  const [moviesCardsUnfiltered, setMoviesCardsUnfiltered] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [savedMoviesVisible, setSavedMoviesVisible] = React.useState([]);
-  const [savedMoviesUnfiltered, setSavedMoviesUnfiltered] = React.useState([]);
   const [position, setPosition] = React.useState(0);
-
-  /*
-    API Responses
-  */
-
-  const displayResponseSuccess = (text) => {
-    handleDisplayInfoTooltip({
-      title: text,
-      texts: [],
-      image: onSuccessResponse
-    });
-  }
-
-  const displayResponseError = (text, error) => {
-    error.json()
-      .then((err) => handleDisplayInfoTooltip({
-        title: `${text} ${error.status} [${error.statusText}]`,
-        texts: [err.message],
-        image: onFailureResponse
-      }))
-      .catch((exeption) => console.error(exeption));
-  }
-
-  const displayUnknownError = React.useCallback(() => {
-    handleDisplayInfoTooltip({
-      title: 'Неизвестная ошибка',
-      texts: [],
-      image: onFailureResponse
-    })
-  }, []);
-
-  /*
-    Установка JWT и информации о пользователе
-  */
-
-  const handleGetSavedMovies = React.useCallback((jwt) => {
-    MainApi.getSavedMovies(jwt)
-      .then((result) => {
-        const saved = result.filter(card => card.owner._id === currentUser._id);
-        setSavedMovies(saved);
-        setSavedMoviesVisible(saved);
-      })
-      .catch((error) => {
-        handleDisplayInfoTooltip({
-          title: `Ошибка ${error.status} [${error.statusText}]`,
-          texts: [],
-          image: onFailureResponse
-        });
-      })
-  }, [currentUser._id]);
-
-  const setUserInfoAndJWT = React.useCallback((jwt, initStage) => {
-    MainApi.getUserInfo(jwt)
-      .then((user) => {
-        onSignIn({ user, jwt });
-        handleGetSavedMovies(jwt);
-      })
-      .catch((error) => {
-        localStorage.removeItem(localStorageKeys.jwt);
-        setIsLoggedIn(false);
-        try {
-          error.json()
-            .then((err) => initStage && error.status === 401 ? console.error(error) : handleDisplayInfoTooltip({
-              title: `Ошибка проверки пользователя: ${error.status} [${error.statusText}]`,
-              texts: [err.message],
-              image: onFailureResponse
-            }))
-            .catch((exeption) => console.error(exeption));
-        } catch {
-          initStage ? console.error(error) : displayUnknownError();
-        }
-      });
-  }, [displayUnknownError, handleGetSavedMovies]);
 
   /*
     Монтирование компонента App
   */
 
+  const loadPage = (token) => {
+    Promise.all([MainApi.getUserInfo(token), MainApi.getSavedMovies(token)])
+      .then(([user, movies]) => {
+        setCurrentUser(user);
+        const savedMovies = movies.filter(movie => movie.owner._id === user._id);
+        setSavedMovies(savedMovies);
+        setSavedMoviesVisible(savedMovies);
+      })
+      .catch(([userError, moviesError]) => {
+        localStorage.removeItem(localStorageKeys.jwt);
+        setIsLoggedIn(false);
+        console.error(userError, moviesError);
+      });
+  }
+
   React.useEffect(() => {
 
     const jwt = localStorage.getItem(localStorageKeys.jwt);
-    if (jwt) {
-      setUserInfoAndJWT(jwt, true);
+
+    if (isKeyExistInLocalStorage(localStorageKeys.moviesCards)) {
+      setMoviesCards(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
     }
-    else {
-      setIsLoggedIn(false);
+
+    if (isKeyExistInLocalStorage(localStorageKeys.moviesCardsSearched)) {
+      setMoviesCardsSearched(JSON.parse(localStorage.getItem(localStorageKeys.moviesCardsSearched)));
     }
-    setIsLoaderOpened(false);
 
     if (isKeyExistInLocalStorage(localStorageKeys.moviesCardsVisible)) {
       setMoviesCardsVisible(JSON.parse(localStorage.getItem(localStorageKeys.moviesCardsVisible)));
     }
 
-  }, [setUserInfoAndJWT]);
+    if (isKeyExistInLocalStorage(localStorageKeys.position)) {
+      setPosition(JSON.parse(localStorage.getItem(localStorageKeys.position)));
+    }
+
+    if (jwt) {
+      loadPage(jwt);
+    }
+    else {
+      setIsLoggedIn(false);
+    }
+
+  }, []);
 
   /*
     Аутентификация пользователя
@@ -149,14 +110,20 @@ function App() {
   const handleSignIn = ({ email, password }, setFormAttributeDisabled) => {
     MainApi.signIn({ email, password })
       .then((response) => {
-        setUserInfoAndJWT(response.token, false);
+        setIsLoggedIn(true);
+        localStorage.setItem(localStorageKeys.jwt, response.token);
+        loadPage(response.token);
       })
       .catch((error) => {
         setFormAttributeDisabled(false);
         try {
           displayResponseError('Ошибка входа:', error);
         } catch {
-          displayUnknownError();
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureResponse
+          });
         }
       });
   }
@@ -172,7 +139,11 @@ function App() {
         try {
           displayResponseError('Ошибка регистрации:', error);
         } catch {
-          displayUnknownError();
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureResponse
+          });
         }
       });
   }
@@ -180,30 +151,29 @@ function App() {
   const handleSignOut = () => {
     MainApi.signOut()
       .then(() => {
-        onSignOut();
+        setIsLoggedIn(false);
+        localStorage.removeItem(localStorageKeys.jwt);
+        localStorage.removeItem(localStorageKeys.moviesCards);
+        localStorage.removeItem(localStorageKeys.moviesCardsSearched);
+        localStorage.removeItem(localStorageKeys.moviesCardsVisible);
+        localStorage.removeItem(localStorageKeys.position);
+        localStorage.removeItem(localStorageKeys.filterCkeckboxSatate);
+        localStorage.removeItem(localStorageKeys.filterCkeckboxSavedSatate);
+        localStorage.removeItem(localStorageKeys.user);
+        setCurrentUser(appInitValues.user);
         displayResponseSuccess('Вы вышли из аккаунта');
       })
       .catch((error) => {
         try {
           displayResponseError('Ошибка выхода:', error);
         } catch {
-          displayUnknownError();
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureResponse
+          });
         }
       });
-  }
-
-  const onSignIn = ({ user, jwt }) => {
-    setIsLoggedIn(true);
-    localStorage.setItem(localStorageKeys.jwt, jwt);
-    setCurrentUser(user);
-  }
-
-  const onSignOut = () => {
-    setIsLoggedIn(false);
-    localStorage.removeItem(localStorageKeys.jwt);
-    localStorage.removeItem(localStorageKeys.moviesCards);
-    localStorage.removeItem(localStorageKeys.moviesCardsVisible);
-    setCurrentUser(appInitValues.user);
   }
 
   /*
@@ -225,7 +195,11 @@ function App() {
         try {
           displayResponseError('Ошибка изменения профиля:', error);
         } catch {
-          displayUnknownError();
+          handleDisplayInfoTooltip({
+            title: 'Неизвестная ошибка',
+            texts: [],
+            image: onFailureResponse
+          });
         }
       });
   }
@@ -243,29 +217,31 @@ function App() {
   }
 
   /*
-    Загрузка фильмов
+    Поиск по фильмам
   */
 
   const handleSearch = (input, notFound) => {
     const deviceWidth = window.innerWidth;
     const count = initialMoviesCount(deviceWidth);
 
-    const onSearch = (cards) => {
-      const transformedResult = cards;
+    const onSearch = (movies) => {
+      const transformedResult = movies;
       const filteredResult = filterMovies(transformedResult, input);
       if (filteredResult.length === 0) {
         notFound();
       }
-      setMoviesCards(filteredResult); //все найденные
-      setMoviesCardsVisible(filteredResult.slice(0, count)); //первоначальные
+      setMoviesCards(transformedResult); //все
+      setMoviesCardsSearched(filteredResult); //все найденные
+      setMoviesCardsVisible(filteredResult.slice(0, count)); //отображаемые
       setPosition(count);
-      return filteredResult.slice(0, count);
+      localStorage.setItem(localStorageKeys.position, JSON.stringify(count));
+      return filteredResult;
     }
 
     if (isKeyExistInLocalStorage(localStorageKeys.moviesCards)) {
-      setIsLoaderOpened(true);
-      onSearch(JSON.parse(localStorage.getItem(localStorageKeys.moviesCards)));
-      setIsLoaderOpened(false);
+      const filteredResult = onSearch(moviesCards);
+      localStorage.setItem(localStorageKeys.moviesCardsSearched, JSON.stringify(filteredResult));
+      localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(filteredResult.slice(0, count)));
       return;
     }
 
@@ -274,7 +250,8 @@ function App() {
       .then((result) => {
         const filteredResult = onSearch(transformFromBeatFilm(result));
         localStorage.setItem(localStorageKeys.moviesCards, JSON.stringify(transformFromBeatFilm(result)));
-        localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(filteredResult));
+        localStorage.setItem(localStorageKeys.moviesCardsSearched, JSON.stringify(filteredResult));
+        localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(filteredResult.slice(0, count)));
       })
       .catch((error) => {
         handleDisplayInfoTooltip({
@@ -288,6 +265,10 @@ function App() {
       });
   }
 
+  /*
+    Поиск по сохранённым фильмам
+  */
+
   const handleSearchSaved = (input, notFound) => {
     const filteredResult = filterMovies(savedMovies, input);
     setSavedMoviesVisible(filteredResult);
@@ -296,38 +277,46 @@ function App() {
     }
   }
 
+  /*
+    Фильтрация короткометражек
+  */
+
   const handleFilterShortMeter = (state) => {
     if (state) {
       setFilterCkeckboxSatate(true);
-      setMoviesCardsUnfiltered(moviesCardsVisible);
-      setMoviesCardsVisible(moviesCardsVisible.filter(movie => movie.duration <= 40))
+      localStorage.setItem(localStorageKeys.filterCkeckboxSatate, JSON.stringify(true));
     }
     else {
       setFilterCkeckboxSatate(false);
-      setMoviesCardsVisible(moviesCardsUnfiltered);
+      localStorage.setItem(localStorageKeys.filterCkeckboxSatate, JSON.stringify(false));
     }
   }
 
   const handleFilterShortMeterSaved = (state) => {
     if (state) {
       setfilterCkeckboxSavedSatate(true);
-      setSavedMoviesUnfiltered(savedMoviesVisible);
-      setSavedMoviesVisible(savedMoviesVisible.filter(movie => movie.duration <= 40))
+      localStorage.setItem(localStorageKeys.filterCkeckboxSavedSatate, JSON.stringify(true));
     }
     else {
       setfilterCkeckboxSavedSatate(false);
-      setSavedMoviesVisible(savedMoviesUnfiltered);
+      localStorage.setItem(localStorageKeys.filterCkeckboxSavedSatate, JSON.stringify(false));
     }
   }
+
+  /*
+    Добавить ещё фильмов
+  */
 
   const handleAddMoreMovies = (deviceWidth) => {
     const count = initialMoviesCount(deviceWidth);
     const nextPosition = position + count;
-    const newMovies = moviesCards.slice(position, nextPosition);
+    const newMovies = moviesCardsSearched.slice(position, nextPosition);
+    const visibleMovies = [...moviesCardsVisible, ...newMovies];
 
-    setMoviesCardsVisible([...moviesCardsVisible, ...newMovies]);
+    setMoviesCardsVisible(visibleMovies);
     setPosition(nextPosition);
-    localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(moviesCardsVisible));
+    localStorage.setItem(localStorageKeys.position, JSON.stringify(nextPosition));
+    localStorage.setItem(localStorageKeys.moviesCardsVisible, JSON.stringify(visibleMovies));
   }
 
   /*
@@ -383,11 +372,33 @@ function App() {
   }
 
   /*
+    API Responses
+  */
+
+  const displayResponseSuccess = (text) => {
+    handleDisplayInfoTooltip({
+      title: text,
+      texts: [],
+      image: onSuccessResponse
+    });
+  }
+
+  const displayResponseError = (text, error) => {
+    error.json()
+      .then((err) => handleDisplayInfoTooltip({
+        title: `${text} ${error.status} [${error.statusText}]`,
+        texts: [err.message],
+        image: onFailureResponse
+      }))
+      .catch((exeption) => console.error(exeption));
+  }
+
+  /*
     Вёрстка компонента
   */
   return (
     <BrowserRouter>
-      <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: isLoggedIn }}>
+      <CurrentUserContext.Provider value={{ currentUser: currentUser, isLoggedIn: isLoggedIn, savedMovies: savedMovies }}>
         <div className='app app__content'>
           <Routes>
             <Route
@@ -407,7 +418,7 @@ function App() {
                     area={areas.areaMovies}
                     moviesCards={moviesCardsVisible}
                     savedMovies={savedMovies}
-                    totalSize={moviesCards.length}
+                    totalSize={moviesCardsSearched.length}
                     filterState={filterCkeckboxSatate}
                   />
                 </ProtectedRoute>}
@@ -424,7 +435,7 @@ function App() {
                     onDelete={handleDeleteFromSaved}
                     area={areas.areaSavedMovies}
                     moviesCards={savedMoviesVisible}
-                    savedMovies={null}
+                    savedMovies={savedMovies}
                     totalSize={0}
                     filterState={filterCkeckboxSavedSatate}
                   />

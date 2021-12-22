@@ -1,19 +1,17 @@
 import React from "react";
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './SaveCheckbox.css';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
-function SaveCheckbox({ movieCard, savedMovies, onToggleSave }) {
+function SaveCheckbox({ movieCard, onToggleSave }) {
 
   const user = React.useContext(CurrentUserContext);
 
-  savedMovies.forEach(item => {
-    if (item.owner._id === user.currentUser._id && item.movieId === movieCard.movieId) {
-      console.log(item.owner._id, user.currentUser._id, item.movieId, movieCard.movieId);
-    }
-  });
-
   const checkboxRef = React.useRef();
   const [isChecked, setIsChecked] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsChecked(user.savedMovies.some(movie => movie.owner._id === user.currentUser._id && movie.movieId === movieCard.movieId));
+  }, [user, movieCard.movieId]);
 
   const toggleCheckboxState = () => {
     isChecked ? setIsChecked(false) : setIsChecked(true);
