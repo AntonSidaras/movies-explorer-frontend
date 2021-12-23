@@ -161,6 +161,11 @@ function App() {
         localStorage.removeItem(localStorageKeys.filterCkeckboxSavedSatate);
         localStorage.removeItem(localStorageKeys.user);
         setCurrentUser(appInitValues.user);
+        setMoviesCards([]);
+        setMoviesCardsSearched([]);
+        setMoviesCardsVisible([]);
+        setSavedMovies([]);
+        setSavedMoviesVisible([]);
         displayResponseSuccess('Вы вышли из аккаунта');
       })
       .catch((error) => {

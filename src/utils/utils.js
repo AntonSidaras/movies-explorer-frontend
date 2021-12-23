@@ -1,4 +1,3 @@
-import validator from 'validator';
 import { moviesServerRoot } from "./constants";
 
 function isKeyExistInLocalStorage(key) {
@@ -64,7 +63,7 @@ function transformFromBeatFilm(movies) {
     trasformedMovie.year = movie.year;
     trasformedMovie.duration = movie.duration;
     trasformedMovie.description = movie.description;
-    trasformedMovie.trailer = (validator.isURL(movie.trailerLink, { require_protocol: true }) ? movie.trailerLink : 'https://www.youtube.com');
+    trasformedMovie.trailer = movie.trailerLink;
     trasformedMovie.image = `${moviesServerRoot}${movie.image.url}`;
     trasformedMovie.thumbnail = trasformedMovie.image;
 
