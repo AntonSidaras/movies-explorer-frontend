@@ -5,16 +5,22 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import './Movies.css';
 
-function Movies({ area, moviesCards, isSaved }) {
+function Movies({ area, moviesCards, savedMovies, onSearch, onFilter, onAddMore, onToggleSave, onDelete, filterState, totalSize }) {
 
   return (
     <>
-      <Header area={area} isLoggedIn={true} />
+      <Header area={area} />
       <main className='movies'>
-        <SearchForm />
+        <SearchForm onSearch={onSearch} onFilter={onFilter} filterState={filterState} />
         <MoviesCardList
           moviesCards={moviesCards}
-          isSaved={isSaved}
+          savedMovies={savedMovies}
+          area={area}
+          totalSize={totalSize}
+          onAddMore={onAddMore}
+          onToggleSave={onToggleSave}
+          onDelete={onDelete}
+          filterState={filterState}
         />
       </main>
       <Footer area={area} />

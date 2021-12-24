@@ -1,23 +1,37 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { moviesCardListText } from "../../utils/constants";
+import { areas } from '../../utils/constants';
 import './MoviesCardList.css';
 
-function MoviesCardList({ moviesCards, isSaved }) {
+function MoviesCardList({ area, moviesCards, savedMovies, totalSize, onAddMore, onToggleSave, onDelete, filterState }) {
+
+  const isAreaSaved = area === areas.areaSavedMovies;
+
+  const handleAddMore = () => {
+    onAddMore(window.innerWidth);
+  }
 
   return (
     <section className='movies-card-list'>
       <div className='movies-card-list__container'>
         {moviesCards.map((item) => (
           <MoviesCard
-            key={item._id}
+            key={item.movieId}
             movieCard={item}
-            isSaved={isSaved}
+            savedMovies={savedMovies}
+            isSaved={isAreaSaved}
+            onToggleSave={onToggleSave}
+            onDelete={onDelete}
+            filterState={filterState}
           />
         ))}
       </div>
       <button
-        className={`movies-card-list__button-more ${isSaved ? 'movies-card-list__button-more_hidden' : ''}`}>
+        className={`movies-card-list__button-more 
+          ${isAreaSaved || moviesCards.length === 0 || moviesCards.length >= totalSize ? 'movies-card-list__button-more_hidden' : ''}`}
+        onClick={handleAddMore}
+      >
         {moviesCardListText.buttonMoreText}
       </button>
     </section>

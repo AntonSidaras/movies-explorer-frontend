@@ -44,7 +44,7 @@
 }
 
 .register__caption{
-  margin: 20px 0 10px 0;
+  margin: 10px 0 10px 0;
   padding: 0;
   font-style: normal;
   font-weight: normal;
@@ -88,7 +88,6 @@
 }
 
 .register__error{
-  visibility: hidden;
   margin: 10px 0 0 0;
   padding: 0;
   font-style: normal;
@@ -98,13 +97,19 @@
   color: #EE3465;
 }
 
-.register__error_visible{
+.register__error_type_last{
+  visibility: hidden;
+  margin: 59px 0 0 0;
+  text-align: center;
+}
+
+.register__error_type_visible{
   visibility: visible;
 }
 
 .register__sign-up-button{
   height: 45px;
-  margin: 69px 0 0 0;
+  margin: 10px 0 0 0;
   padding: 0;
   border: none;
   outline: none;
@@ -118,6 +123,10 @@
   color: #fff;
   opacity: 1;
   transition: opacity 0.3s ease;
+}
+
+.register__sign-up-button_type_disabled{
+  opacity: 0.6;
 }
 
 .register__sign-up-button:hover{
@@ -191,9 +200,11 @@
     width: 260px;
   }
   .register__sign-up-button{
-    margin: 157px 0 0 0;
     font-size: 12px;
     line-height: 15px;
+  }
+  .register__error_type_last{
+    margin: 147px 0 0 0;
   }
   .register__text{
     font-weight: normal;

@@ -28,6 +28,7 @@
 }
 
 .profile__form{
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,6 +110,10 @@
   user-select: none;
 }
 
+.profile__edit-button_disabled{
+  opacity: 0.6;
+}
+
 .profile__edit-button:hover{
   cursor: pointer;
   opacity: 0.6;
@@ -136,6 +141,27 @@
 .profile__logout:hover{
   cursor: pointer;
   opacity: 0.6;
+}
+
+.profile__error{
+  position: absolute;
+  left: 50%;
+  top: 0;
+  display: block;
+  width: 250px;
+  margin: 0;
+  margin-left: -125px;
+  padding: 0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  color: #EE3465;
+}
+
+.profile__error_type_second{
+  top: 36px;
 }
 
 @media screen and (max-width: 500px) {

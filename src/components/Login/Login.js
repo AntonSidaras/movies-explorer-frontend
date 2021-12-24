@@ -1,47 +1,119 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
 import Header from '../Header/Header';
 import { appRoutes, areas, loginText } from '../../utils/constants';
 import './Login.css';
 
-function Login() {
+function Login({ onSignIn }) {
 
-  const navigate = useNavigate();
+  const emailRef = React.useRef();
+  const passwordRef = React.useRef();
+  const buttonRef = React.useRef();
+
+  const [emailErrorText, setEmailErrorText] = React.useState('');
+  const [passwordErrorText, setPasswordErrorText] = React.useState('');
+
+  const [isValidEmail, setIsValidEmail] = React.useState(false);
+  const [isValidPassword, setIsValidPassword] = React.useState(false);
+
+  const [isSignInError, setIsSignInError] = React.useState(false);
+  const [isValidCredentials, setIsValidCredentials] = React.useState(false);
+
+  function checkValidEmail() {
+    if (!emailRef.current.validity.valid) {
+      setEmailErrorText(emailRef.current.validationMessage);
+      setIsValidEmail(false);
+      setIsValidCredentials(false);
+    }
+    else {
+      setIsValidEmail(true);
+      setIsValidCredentials(isValidEmail && isValidPassword);
+      setEmailErrorText('');
+    }
+  }
+
+  function checkValidPassword() {
+    if (!passwordRef.current.validity.valid) {
+      setPasswordErrorText(passwordRef.current.validationMessage);
+      setIsValidPassword(false);
+      setIsValidCredentials(false);
+    }
+    else {
+      setIsValidPassword(true);
+      setIsValidCredentials(isValidEmail && isValidPassword);
+      setPasswordErrorText('');
+    }
+  }
+
+  function setFormAttributeDisabled(value) {
+    emailRef.current.disabled = value;
+    passwordRef.current.disabled = value;
+    buttonRef.current.disabled = value;
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-    navigate(appRoutes.content.movies);
+
+    setFormAttributeDisabled(true);
+
+    onSignIn({
+      email: emailRef.current.value,
+      password: passwordRef.current.value
+    }, setFormAttributeDisabled);
+
+    if (isValidCredentials) {
+      setIsSignInError(false);
+      //navigate(appRoutes.content.movies);
+    }
+    else {
+      setIsSignInError(true);
+    }
   }
 
   return (
     <section className='login'>
-      <Header area={areas.areaAuth} isLoggedIn={false} />
+      <Header area={areas.areaAuth} />
       <div className='login__section'>
         <h2 className='login__title'>{loginText.title}</h2>
         <form className='login__form' onSubmit={handleSubmit} noValidate>
           <fieldset className='login__fieldset'>
-            <label htmlFor='emailLogin' className='login__caption'>{loginText.captions.email}</label>
+            <label
+              htmlFor='emailLogin'
+              className='login__caption'
+            >{loginText.captions.email}</label>
             <input
               id='emailLogin'
               className='login__input'
               type='email'
+              disabled={false}
               required
+              ref={emailRef}
+              onChange={checkValidEmail}
             />
-            <label htmlFor='passwordLogin' className='login__caption'>{loginText.captions.password}</label>
+            <span className='login__error'>{emailErrorText}</span>
+            <label
+              htmlFor='passwordLogin'
+              className='login__caption'
+            >{loginText.captions.password}</label>
             <input
               id='passwordLogin'
-              className={`login__input ${true ? 'login__input_color_red' : ''}`}
+              className={`login__input ${isSignInError ? 'login__input_color_red' : ''}`}
               type='password'
+              disabled={false}
               required
+              ref={passwordRef}
+              onChange={checkValidPassword}
             />
+            <span className='login__error'>{passwordErrorText}</span>
           </fieldset>
           <span
-            className={`login__error ${true ? 'login__error_visible' : ''}`}
+            className={`login__error login__error_type_last ${isSignInError ? 'login__error_type_visible' : ''}`}
           >{loginText.errorText}</span>
           <button
-            className='login__sign-in-button'
+            className={`login__sign-in-button ${!isValidCredentials ? 'login__sign-in-button_type_disabled' : ''}`}
             type='submit'
+            disabled={!isValidCredentials}
+            ref={buttonRef}
           >{loginText.buttonText}</button>
         </form>
         <div className='login__bottom'>

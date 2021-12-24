@@ -3,6 +3,9 @@ const toSocial = {
   git: 'https://github.com/AntonSidaras'
 }
 
+const moviesServerRoot = 'https://api.nomoreparties.co';
+const mainApiServerRoot = 'https://api.asidaras.movies.nomoredomains.club';
+
 const appRoutes = {
   root: '/',
   content: {
@@ -27,9 +30,9 @@ const areas = {
 
 const appInitValues = {
   user: {
-    name: "Антон",
-    email: 'a.sidaras@yandex.ru',
-    _id: '1234567890123456789'
+    _id: '',
+    email: '',
+    name: ''
   }
 }
 
@@ -96,6 +99,18 @@ const headerText = {
   alt: 'Логотип проекта Movies Explorer'
 }
 
+const localStorageKeys = {
+  moviesCards: 'moviesCards',
+  moviesCardsSearched: 'moviesCardsSearched',
+  moviesCardsVisible: 'moviesCardsVisible',
+  moviesCardsSaved: 'moviesCardsSaved',
+  filterCkeckboxSatate: 'filterCkeckboxSatate',
+  filterCkeckboxSavedSatate: 'filterCkeckboxSavedSatate',
+  position: 'position',
+  user: 'user',
+  jwt: 'jwt'
+}
+
 const loginText = {
   title: 'Рады видеть!',
   captions: {
@@ -121,6 +136,8 @@ const notFoundText = {
   text: 'Страница не найдена',
   backLink: 'Назад'
 }
+
+const moviesCardAlt = 'Постер фильма';
 
 const moviesCardListText = {
   buttonMoreText: 'Ещё'
@@ -194,6 +211,8 @@ const defaultLoginTooltipData = {
 }
 
 export {
+  moviesServerRoot,
+  mainApiServerRoot,
   appRoutes,
   areas,
   appInitValues,
@@ -202,9 +221,11 @@ export {
   authButtonsText,
   headerText,
   footerText,
+  localStorageKeys,
   loginText,
   navText,
   notFoundText,
+  moviesCardAlt,
   moviesCardListText,
   portfolioText,
   profileText,

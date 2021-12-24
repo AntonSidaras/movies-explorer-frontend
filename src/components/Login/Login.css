@@ -44,7 +44,7 @@
 }
 
 .login__caption{
-  margin: 20px 0 10px 0;
+  margin: 10px 0 10px 0;
   padding: 0;
   font-style: normal;
   font-weight: normal;
@@ -80,7 +80,7 @@
 }
 
 .login__input:last-of-type{
-  letter-spacing: 5px;
+  letter-spacing: 1px;
 }
 
 .login__input_color_red{
@@ -88,7 +88,6 @@
 }
 
 .login__error{
-  visibility: hidden;
   margin: 10px 0 0 0;
   padding: 0;
   font-style: normal;
@@ -98,13 +97,19 @@
   color: #EE3465;
 }
 
-.login__error_visible{
+.login__error_type_last{
+  visibility: hidden;
+  margin: 147px 0 0 0;
+  text-align: center;
+}
+
+.login__error_type_visible{
   visibility: visible;
 }
 
 .login__sign-in-button{
   height: 45px;
-  margin: 157px 0 0 0;
+  margin: 10px 0 0 0;
   padding: 0;
   border: none;
   outline: none;
@@ -120,7 +125,7 @@
   transition: opacity 0.3s ease;
 }
 
-.login__sign-in-button_disabled{
+.login__sign-in-button_type_disabled{
   opacity: 0.6;
 }
 
@@ -195,9 +200,11 @@
     width: 260px;
   }
   .login__sign-in-button{
-    margin: 245px 0 0 0;
     font-size: 12px;
     line-height: 15px;
+  }
+  .login__error_type_last{
+    margin: 235px 0 0 0;
   }
   .login__text{
     font-weight: normal;
