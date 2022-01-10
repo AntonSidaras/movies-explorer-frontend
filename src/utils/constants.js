@@ -4,7 +4,7 @@ const toSocial = {
 }
 
 const moviesServerRoot = 'https://api.nomoreparties.co';
-const mainApiServerRoot = 'https://api.asidaras.movies.nomoredomains.club';
+const mainApiServerRoot = 'https://api.movies.asidaras.ru';
 
 const appRoutes = {
   root: '/',
