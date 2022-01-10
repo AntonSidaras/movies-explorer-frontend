@@ -1,6 +1,6 @@
 const toSocial = {
   vk: 'https://vk.com/antonsidaras',
-  git: 'https://github.com/AntonSidaras'
+  git: 'https://github.com/asidaras'
 }
 
 const moviesServerRoot = 'https://api.nomoreparties.co';
