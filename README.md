@@ -3,7 +3,7 @@
 
 ## Ссылка на сайт
 
-https://asidaras.movies.nomoredomains.club/
+https://movies.asidaras.ru/
 
 ## Ссылка на макет
 
