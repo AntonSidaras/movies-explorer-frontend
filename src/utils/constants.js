@@ -151,9 +151,9 @@ const portfolioText = {
     app: 'Одностраничное приложение'
   },
   to: {
-    static: 'https://github.com/AntonSidaras/how-to-learn',
-    flex: 'https://antonsidaras.github.io/russian-travel/',
-    app: 'https://asidaras.mesto.nomoredomains.club/sign-in'
+    static: 'https://github.com/asidaras/how-to-learn',
+    flex: 'https://russian-travel.asidaras.ru/',
+    app: 'https://mesto.asidaras.ru/'
   }
 }
 
