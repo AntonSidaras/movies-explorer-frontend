@@ -151,7 +151,7 @@ const portfolioText = {
     app: 'Одностраничное приложение'
   },
   to: {
-    static: 'https://github.com/asidaras/how-to-learn',
+    static: 'https://how-to-learn.asidaras.ru/',
     flex: 'https://russian-travel.asidaras.ru/',
     app: 'https://mesto.asidaras.ru/'
   }
