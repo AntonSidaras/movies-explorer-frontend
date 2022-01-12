@@ -1,5 +1,5 @@
 const toSocial = {
-  vk: 'https://vk.com/antonsidaras',
+  vk: 'https://vk.com/asidaras',
   git: 'https://github.com/asidaras'
 }
 
